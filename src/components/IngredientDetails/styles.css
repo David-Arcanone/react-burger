@@ -1,0 +1,23 @@
+.IngredientDetails{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.headerForModal{
+    align-self: flex-start;
+}
+
+.caloriesTable{
+    display: grid;
+    grid-template-columns: minmax(120px, auto) minmax(112px, auto) minmax(112px, auto) minmax(112px, auto);
+    column-gap: 20px;
+    row-gap: 8px;
+    list-style: none;
+    margin:0;
+    padding: 0;
+    justify-items: center;
+}

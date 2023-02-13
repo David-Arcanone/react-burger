@@ -1,0 +1,19 @@
+.IngredientCard{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    cursor: pointer;
+    max-width: 272px;
+    min-height: 208px;
+}
+.price-line{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.food-name{
+    text-align: center;
+    display: block;
+}
