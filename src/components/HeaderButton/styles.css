@@ -1,0 +1,11 @@
+.header-menu-button{
+    display: block;
+    background-color: transparent;
+    border: none;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    color: #F2F2F3;
+}

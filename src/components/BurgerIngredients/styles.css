@@ -1,0 +1,47 @@
+.BurgerIngredients{
+    display: flex;
+    flex-direction: column;
+    height: 1fr;
+}
+.tab-container{
+    display: flex;
+    flex-direction: row;
+}
+.ingredientList{
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+    justify-items: center;
+}
+/*
+.scrollbar-ingredients{
+    scrollbar-width: 8px;
+    
+    scrollbar-color: #4C4CFF #2F2F37;
+    
+    overflow-y:auto;
+    overflow-x:hidden;
+    max-height: 716px;
+    border: 1px solid red;
+}
+.scrollbar-ingredients::-webkit-scrollbar{
+    width: 8px;
+}
+.scrollbar-ingredients::-webkit-scrollbar-track{
+    background: #2F2F37;
+}
+.scrollbar-ingredients::-webkit-scrollbar-thumb{
+    background-color: #4C4CFF;
+}*/
+
+.scrollbar{
+    background-color: #2F2F37;
+    width: 8px;
+    height: 664px;
+    margin-left: 592px;
+  
+  }
+  .scrolltumb{
+    background-color:#8585AD;
+  }
+  
