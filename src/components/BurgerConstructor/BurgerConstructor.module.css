@@ -1,46 +1,54 @@
-.BurgerConstructor{
+.BurgerConstructor {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
     height: 1fr;
 }
-.orderOverview{
+
+.orderOverview {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-.ConstructorBunElement{
+
+.ConstructorBunElement {
     list-style: none;
     display: flex;
     justify-content: flex-end;
 }
-.ConstructorIngredientElement{
+/*
+.ConstructorIngredientElement {
     list-style: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-.basket{
+}*/
+
+.basket {
     margin: 0;
     padding: 0;
 }
-.scrollbar-constructor{
+
+.scrollbarConstructor {
     display: flex;
     flex-direction: column;
-    gap:16px;
+    gap: 16px;
     scrollbar-width: 8px;
     scrollbar-color: #8585AD #2F2F37;
-    overflow-y:auto;
-    overflow-x:hidden;
+    overflow-y: scroll;
+    overflow-x: hidden;
     max-height: 464px;
 }
-.scrollbar-constructor::-webkit-scrollbar{
+
+.scrollbarConstructor::-webkit-scrollbar {
     width: 8px;
 }
-.scrollbar-constructor::-webkit-scrollbar-track{
+
+.scrollbarConstructor::-webkit-scrollbar-track {
     background: #2F2F37;
 }
-.scrollbar-constructor::-webkit-scrollbar-thumb{
+
+.scrollbarConstructor::-webkit-scrollbar-thumb {
     background-color: #8585AD;
 }

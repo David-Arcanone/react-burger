@@ -1,4 +1,4 @@
-.IngredientCard{
+.IngredientCard {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -7,13 +7,15 @@
     max-width: 272px;
     min-height: 208px;
 }
-.price-line{
+
+.priceLine {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
-.food-name{
+
+.foodName {
     text-align: center;
     display: block;
 }

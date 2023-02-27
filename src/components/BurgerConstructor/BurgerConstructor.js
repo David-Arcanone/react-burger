@@ -1,75 +1,86 @@
-import React from 'react';
-import { Button,ConstructorElement,DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {CurrencyBig} from '../../components/CurrencyBig/CurrencyBig';
+//import React, { useMemo } from 'react';
+import { Button, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyBig } from '../../components/CurrencyBig/CurrencyBig';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import './styles.css';
-import {ingredientType} from '../../utils/types/types';
-import PropTypes from "prop-types";
+import styles from './BurgerConstructor.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { openOrderInfo, OPEN_ORDER_INFO } from '../../services/actions/Modal/Modal';
+import { loadOrderToServer } from '../../services/actions/OrderDetails/OrderDetails';
+import BurgerFilling from '../BurgerFilling/BurgerFilling';
+import { useDrop } from "react-dnd";
+import { addIngredientToConstructor, changeOrderBun } from '../../services/actions/BurgerConstructor/BurgerConstructor';
 
-function BurgerConstructor({
-  currentBuns,
-  currentIngredients,
-  modalStatus, 
-  openModalFunction, 
-  closeModalFunction,
-  modalKey
-}) {
-  const [current, setCurrent] = React.useState('buns')
+function BurgerConstructor() {
+  const dispatch = useDispatch();
+  const { bunsMenu, ingredientsMenu, orderBun, orderIngredients, ready, totalPrice } = useSelector(state => state.burgerConstructor);
+  const { modalData } = useSelector(state => state.modal);
+  const { unResponded } = useSelector(state => state.orderDetails);
+  
+  const [, dropConstructor] = useDrop({
+    accept: "ingredient",
+    drop({menuIndex, bunFlag}) {
+      dispatch(bunFlag?(changeOrderBun(menuIndex)):(addIngredientToConstructor(menuIndex)));
+    },
+});
+  /* Сумму я беру со сторэджа, но если это лишнее, раскоментирую и заменю totalPrice на sum в табло цены заказа.
+  const sum = useMemo(() => (bunsMenu[orderBun - 1].price * 2 + orderIngredients.reduce((sum, ingredient) => {
+    return ingredientsMenu[ingredient.ingredientType].price + sum;
+  }, 0)), [orderIngredients, orderBun]);*/
+  const createOrderList = () => {
+    //функция вызывается только когда есть булки (условие существования кнопки), так что проверки булок нет
+    const CurrentBun = bunsMenu[orderBun - 1]._id;
+    //if (orderIngredients.length > 0) { 
+    return [CurrentBun, ...orderIngredients.map((ingredient) => { return ingredientsMenu[ingredient.ingredientType]._id }), CurrentBun]
+    //};return [CurrentBun, CurrentBun]
+  }
   return (<>
-    <section className="BurgerConstructor ml-5 mr-5 pt-25">
-      <ul className='basket'>
-        {currentBuns&&<li className='ConstructorBunElement pb-4 pr-4' key={0 + ' ' + currentBuns._id}>
-          <ConstructorElement className="list-element-ingredient"
-          type="top"
-          isLocked={true}
-          text={`${currentBuns.name} (верх)`}
-          price={currentBuns.price}
-          thumbnail={currentBuns.image_mobile}/>
-        </li>}
-        <div className='scrollbar-constructor'>
-          {currentIngredients&&currentIngredients.map((ingredient, index)=>{
-            return <li className="ConstructorIngredientElement pr-2" key={index + 1 + ' ' + ingredient._id}>
-              <DragIcon type="primary" />
-              <ConstructorElement className="list-element-ingredient"
-              text={ingredient.name}
-              price={ingredient.price}
-              thumbnail={ingredient.image_mobile}/>
-            </li>})
-          }
+    <section className={`${styles.BurgerConstructor} ml-5 mr-5 pt-25`} ref={dropConstructor}>
+        <ul className={styles.basket} >
+          {orderBun !== 0 && <li className={`${styles.ConstructorBunElement} pb-4 pr-4`} key={1}>
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${bunsMenu[orderBun - 1].name} (верх)`}
+              price={bunsMenu[orderBun - 1].price}
+              thumbnail={bunsMenu[orderBun - 1].image_mobile} />
+          </li>}
+          <div className={styles.scrollbarConstructor}>
+            {ready && orderIngredients.map((ingredient, index) => {
+              return <BurgerFilling menuIndex={ingredient.ingredientType} uuID={ingredient.uuid} key={ingredient.uuid} order={index} />
+            })
+            }
+          </div>
+          {orderBun !== 0 && <li className={`${styles.ConstructorBunElement} pb-10 pt-4 pr-4`} key={2}>
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${bunsMenu[orderBun - 1].name} (низ)`}
+              price={bunsMenu[orderBun - 1].price}
+              thumbnail={bunsMenu[orderBun - 1].image_mobile} />
+          </li>}
+        </ul>
+        <div className={`${styles.orderOverview} pr-4`}>
+          <p className='text text_type_digits-medium'>
+            {totalPrice}</p>
+          <CurrencyBig type="primary" />
+          {orderBun === 0 ?
+            <p className='text text_type_main-small'>Для оформления заказа нужны булки</p> : <Button
+              htmlType="button"
+              type="primary"
+              size="large"
+              onClick={() => {
+                dispatch((unResponded) ? openOrderInfo() : loadOrderToServer(createOrderList()));
+              }}>
+              {unResponded ? "Вернуться в заказ" : "Оформить заказ"}</Button>}
         </div>
-        {currentBuns&&<li className='ConstructorBunElement pb-10 pt-4 pr-2' key={currentIngredients.length + 1 + ' ' + currentBuns._id}>
-          <ConstructorElement className="list-element-ingredient"
-          type="bottom"
-          isLocked={true}
-          text={`${currentBuns.name} (низ)`}
-          price={currentBuns.price}
-          thumbnail={currentBuns.image_mobile}/>
-        </li>}
-      </ul>      
-      <div className='orderOverview pr-4'>
-        <p className='text text_type_digits-medium'>
-          {(currentBuns.price*2+currentIngredients.reduce((sum,ingredient)=>{return ingredient.price + sum;},0))}</p>
-          <CurrencyBig type="primary"/>
-          <Button htmlType="button" type="primary" size="large" onClick={openModalFunction}>
-          Оформить заказ</Button>        
-      </div>
     </section>
-    {modalStatus===modalKey&&<Modal onClose={closeModalFunction}>
+    {modalData === OPEN_ORDER_INFO && <Modal>
       <div className='pt-30 pb-30'>
-        <OrderDetails orderStatus={"Ваш заказ начали готовить"} orderNumber={"034536"}/>
+        <OrderDetails />
       </div>
-      </Modal>}
-    </>
+    </Modal>}
+  </>
   );
-}
-
-BurgerConstructor.propTypes ={
-  currentBuns: ingredientType.isRequired,
-  currentIngredients: PropTypes.arrayOf(ingredientType).isRequired , 
-  modalStatus: PropTypes.string.isRequired, 
-  openModalFunction: PropTypes.func.isRequired, 
-  closeModalFunction: PropTypes.func.isRequired,
-  modalKey: PropTypes.string.isRequired
 }
 export default BurgerConstructor;
