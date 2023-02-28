@@ -5,8 +5,8 @@ import {
   MOVE_INGREDIENT,
   INIT_CONSTRUCTOR_LIBRARY,
   REFRESH_PRICE,
+  CLEAN_CONSTRUCTOR,
 } from '../actions/BurgerConstructor/BurgerConstructor';
-import { v4 as uuidV4 } from "uuid";
 
 const initialState = {
   bunsMenu: [],
@@ -38,7 +38,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
       return {
         ...state,
         totalPrice: state.totalPrice + state.ingredientsMenu[action.menuIndex].price,
-        orderIngredients: [...state.orderIngredients, { uuid: uuidV4(), ingredientType: action.menuIndex }]
+        orderIngredients: [...state.orderIngredients, { uuid: action.uuid, ingredientType: action.menuIndex }]
       };
     }
     case CHANGE_ORDER_BUN: {
@@ -57,7 +57,6 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         orderIngredients: cloneOrderIngredients,
       };
     }
-
     case REFRESH_PRICE: {
       return {
         ...state,
@@ -65,7 +64,15 @@ export const burgerConstructorReducer = (state = initialState, action) => {
           return state.ingredientsMenu[ingredient.ingredientType].price + sum;
         }, 0)
       };
-    };
+    }
+    case CLEAN_CONSTRUCTOR: {
+      return {
+        ...state,
+        orderBun: 0, // индексы булочек сдвигаю на +1, 0 будет когда булок нет.
+        orderIngredients: [],
+        totalPrice: 0,
+      }
+    }
     default: {
       return state;
     }

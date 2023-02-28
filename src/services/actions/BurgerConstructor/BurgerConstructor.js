@@ -1,5 +1,5 @@
 import { CHANGE_BUNS, INCREASE_INGREDIENT_AMOUNT } from "../BurgerIngredients/BurgerIngredients";
-
+import { v4 as uuidV4 } from "uuid";
 //конструктор
 export const ADD_INGREDIENT_TO_CONSTRUCTOR = 'ADD_INGREDIENT_TO_CONSTRUCTOR';
 export const DELETE_INGREDIENT_FROM_CONSTRUCTOR = 'DELETE_INGREDIENT_FROM_CONSTRUCTOR';
@@ -8,12 +8,14 @@ export const CLEAR_ORDER = "CLEAR_ORDER";
 export const INIT_CONSTRUCTOR_LIBRARY = "INIT_CONSTRUCTOR_LIBRARY";
 export const MOVE_INGREDIENT = "MOVE_INGREDIENT";
 export const REFRESH_PRICE = 'REFRESH_PRICE';
+export const CLEAN_CONSTRUCTOR = 'CLEAN_CONSTRUCTOR';
 
 export function addIngredientToConstructor(menuIndex) {
     return function (dispatch) {
         dispatch({
             type: ADD_INGREDIENT_TO_CONSTRUCTOR,
-            menuIndex
+            menuIndex,
+            uuid: uuidV4(),
         });
         dispatch({
             type: INCREASE_INGREDIENT_AMOUNT,
@@ -22,12 +24,10 @@ export function addIngredientToConstructor(menuIndex) {
     };
 }
 export function deleteIngredientFromConstructor(uuid,ingredientType) {
-    return function (dispatch) {
-        dispatch({
+    return {
             type: DELETE_INGREDIENT_FROM_CONSTRUCTOR,
             uuid,
-            deletedIngredientType: ingredientType
-        });
+            deletedIngredientType: ingredientType,
     };
 }
 export function changeOrderBun(menuIndex){
@@ -42,19 +42,15 @@ export function changeOrderBun(menuIndex){
         });
     };
 }
-export function clearOrder() { //если потребуется очистка заказа
-    return function (dispatch) {
-        dispatch({
-            type: CLEAR_ORDER
-        });
-    };
-}
-export function moveIngredient(newIndex, oldIndex) { //если потребуется очистка заказа
-    return function (dispatch) {
-        dispatch({
+export function moveIngredient(newIndex, oldIndex) {
+    return {
             type: MOVE_INGREDIENT,
             newIndex,
-            oldIndex
-        });
+            oldIndex,
+    };
+}
+export function cleanConstructor() { //если потребуется очистка заказа
+    return {
+            type: CLEAN_CONSTRUCTOR
     };
 }

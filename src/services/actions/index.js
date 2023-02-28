@@ -5,7 +5,6 @@
 export const UPLOADING_ORDER = 'UPLOADING_ORDER';
 export const APPROVED_ORDER = 'APPROVED_ORDER';
 export const DECLINED_ORDER = 'DECLINED_ORDER';
-
 export function getIngredientsFromServer() {
     return function(dispatch) {
       dispatch({

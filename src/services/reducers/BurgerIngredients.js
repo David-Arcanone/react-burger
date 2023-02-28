@@ -6,6 +6,7 @@ import {
   INCREASE_INGREDIENT_AMOUNT,
   CHANGE_BUNS,
   REFRESH_TABS,
+  CLEAN_SELECTED_INGREDIENTS,
 } from '../actions/BurgerIngredients/BurgerIngredients';
 
 const initialState = {
@@ -75,6 +76,13 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
         souceTabStatus: action.souceTab,
         mainTabStatus: action.mainTab
       };
+    }
+    case CLEAN_SELECTED_INGREDIENTS: {
+      return {
+        ...state,
+        buns:[...state.buns].map((foodItem)=>({...foodItem,qty:0})),
+        ingredients: [...state.ingredients].map((foodItem)=>({...foodItem,qty:0}))
+      }
     }
     default: {
       return state;

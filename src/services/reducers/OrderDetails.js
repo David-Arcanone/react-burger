@@ -39,6 +39,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
     }
     case CLEAR_ORDER: {
       //устанавливаю флаг unResponded, если пользователь закрыл не увидев ответ с сервера
+      //если функционал возвращения в неуведенный заказ не нужен, эту if удалю
       if (state.orderRequest) {
         return {
           ...state,

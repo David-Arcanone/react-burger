@@ -16,9 +16,7 @@ export function changeCurrentFocusIngredient(data) {
     };
 }
 export function clearCurrentIngredient() {
-    return function (dispatch) {
-        dispatch({
-            type: CLEAR_CURRENT_INGREDIENT
-        });
+    return {
+        type: CLEAR_CURRENT_INGREDIENT,
     };
 }
