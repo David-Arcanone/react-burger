@@ -1,22 +1,23 @@
-
-.page{
+.page {
   background-color: #131316;
 
-/*
+  /*
   height: 100vh;
   overflow: hidden;*/
 }
-.main{
+
+.main {
   margin: 0 auto;
   display: grid;
   max-width: 1280px;
   grid-template-columns: 1fr 1fr;
   height: 1fr;
 }
-.modal-container{
+
+.modal-container {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  top:0;
+  top: 0;
   left: 0;
 }

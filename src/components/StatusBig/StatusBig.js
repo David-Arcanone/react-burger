@@ -1,5 +1,5 @@
 
-import { getIconColor} from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/utils';
+import { getIconColor } from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/utils';
 
 export const StatusBig = ({ type }) => {
     return (
@@ -9,7 +9,8 @@ export const StatusBig = ({ type }) => {
             height="24"
             viewBox="0 0 24 24"
             fill={getIconColor(type)}
-            style={{transform: "scale(2)",
+            style={{
+                transform: "scale(2)",
             }}
         >
             <path
