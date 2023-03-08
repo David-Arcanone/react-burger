@@ -9,19 +9,19 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModal, OPEN_INGREDIENT_FOCUS, OPEN_ORDER_INFO } from '../../services/actions/Modal/Modal';
 import { clearCurrentIngredient } from '../../services/actions/IngredientDetails/IngredientDetails';
-import { clearOrder } from '../../services/actions/OrderDetails/OrderDetails';
+import { clearOrder, suspendOrder } from '../../services/actions/OrderDetails/OrderDetails';
 import { cleanConstructor } from '../../services/actions/BurgerConstructor/BurgerConstructor';
 
 function App() {
   const dispatch = useDispatch();
   const { readyIngredients } = useSelector(state => state.burgerIngredients);
   const { modalData } = useSelector(state => state.modal);
+  const {orderRequest} = useSelector(state => state.orderDetails)
   const closeModalFunction =()=> {
-
     switch (modalData) {
       case (OPEN_ORDER_INFO): {
-        dispatch(clearOrder());
-        //МОЕ МНЕНИЕ: "это лишнее"
+        dispatch( orderRequest? suspendOrder() : clearOrder());
+        //МОЕ МНЕНИЕ: "это лишнее" могу сделать условие (чтоб не стирать если идет саспенд заявки/ пользователь закрыл не увидев №заказа)
         dispatch(cleanConstructor());//
         dispatch(cleanSelectedIngredients());//
         /*Пользователи как правило желают заказать несколько одинаковых бургеров для всей семьи 
