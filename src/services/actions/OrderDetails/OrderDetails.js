@@ -1,4 +1,5 @@
-import { configNewOrder, requestServer } from "../../../utils/Api/Api";
+import { //configNewOrder, 
+    configStandartRequest, requestServer } from "../../../utils/api/api";
 import { OPEN_ORDER_INFO } from "../Modal/Modal";
 
 export const LOAD_ORDER_REQUEST = 'LOAD_ORDER_REQUEST';
@@ -15,7 +16,8 @@ export function loadOrderToServer(orderList) {
         dispatch({
             type: LOAD_ORDER_REQUEST
         });
-        requestServer("/orders",configNewOrder(orderList)).then(data => {
+        requestServer("/orders",//configNewOrder(orderList)
+        configStandartRequest({ingredients: orderList},"POST")).then(data => {
             dispatch({
                 type: LOAD_ORDER_REQUEST_SUCCES,
                 payloadOrderName: data.name,

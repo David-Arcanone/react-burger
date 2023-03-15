@@ -4,6 +4,7 @@ import './index.css';
 import App from './components/App/App.js';
 import reportWebVitals from './reportWebVitals';
 import { store } from './services/store/store.js';//Хранилище тут
+import { BrowserRouter} from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 
@@ -14,7 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

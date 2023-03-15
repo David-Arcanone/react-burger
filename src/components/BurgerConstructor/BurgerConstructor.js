@@ -10,9 +10,12 @@ import BurgerFilling from '../BurgerFilling/BurgerFilling';
 import { useDrop } from "react-dnd";
 import { addIngredientToConstructor, changeOrderBun } from '../../services/actions/BurgerConstructor/BurgerConstructor';
 import PropTypes from 'prop-types';
+import { getCookie } from '../../utils/authentication/authentication';
+import { useNavigate } from 'react-router-dom';
 
 function BurgerConstructor({closeModalCallback}) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { bunsMenu, ingredientsMenu, orderBun, orderIngredients, ready, totalPrice } = useSelector(state => state.burgerConstructor);
   const { modalData } = useSelector(state => state.modal);
   const { unResponded } = useSelector(state => state.orderDetails);
@@ -68,8 +71,8 @@ function BurgerConstructor({closeModalCallback}) {
             htmlType="button"
             type="primary"
             size="large"
-            onClick={() => {
-              dispatch((unResponded) ? openOrderInfo() : loadOrderToServer(createOrderList()));
+            onClick={() => {if(!!getCookie("isLoggedIn")!==true){navigate("/login");}else
+            {dispatch((unResponded) ? openOrderInfo() : loadOrderToServer(createOrderList()));}
             }}>
             {unResponded ? "Вернуться в заказ" : "Оформить заказ"}</Button>}
       </div>

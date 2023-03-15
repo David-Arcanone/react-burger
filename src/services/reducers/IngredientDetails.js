@@ -1,3 +1,4 @@
+/*
 import {
     CHANGE_CURRENT_INGREDIENT,
     CLEAR_CURRENT_INGREDIENT
@@ -26,4 +27,4 @@ import {
         return state;
       }
     }
-  };
+  };*/

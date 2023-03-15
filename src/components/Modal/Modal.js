@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import styles from './Modal.module.css';
 const modalReact = document.getElementById("modalReact");
-const Modal = ({ onClose,children  }) => {
+const Modal = ({ onClose,children}) => {
   React.useEffect(() => {
     const handleEsc = (evt) => {
       if (evt.key === "Escape") {
@@ -17,9 +17,6 @@ const Modal = ({ onClose,children  }) => {
       document.removeEventListener("keydown", handleEsc);
     };
   }, [onClose]);
-  /*const onClickCallback=()=>{
-    onClose();
-  }*/
   return ReactDOM.createPortal(
     <div className={styles.Modal}>
       <div className={styles.modalBox}>
