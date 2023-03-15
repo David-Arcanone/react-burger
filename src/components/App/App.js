@@ -70,6 +70,7 @@ export default function App() {
               <Route path="/ingredients/:id" element={<Ingredients />} />
               {/*Защищенная страница*/}
               <Route path="/profile" element={<ProtectedPage><Profile /></ProtectedPage>} />
+              <Route path="/profile/*" element={<ProtectedPage><NotFound /></ProtectedPage>} />
               {/*Страницы авторизации*/}
               <Route path="/login" element={<UnloggedPage><Login /></UnloggedPage>} />
               <Route path="/register" element={<UnloggedPage><RegisterPage /></UnloggedPage>} />
