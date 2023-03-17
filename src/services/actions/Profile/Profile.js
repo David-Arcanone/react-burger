@@ -1,5 +1,5 @@
 //выбранный ингредиент
-import { configAdvancedRequest, configAdvancedRequestNoBody, requestServerWithRefresh } from "../../../utils/api/api";
+import { configAdvancedRequest, configAdvancedRequestNoBody, requestServerWithRefresh } from "../../../utils/2api/2api";
 import { LOGIN_REDIRECTED } from "../Login/Login";
 export const CHANGE_CURRENT_PROFILE_INPUT_EMAIL = 'CHANGE_CURRENT_PROFILE_INPUT_EMAIL';
 export const CHANGE_CURRENT_PROFILE_INPUT_PASSWORD = 'CHANGE_CURRENT_PROFILE_INPUT_PASSWORD';

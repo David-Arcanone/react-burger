@@ -1,5 +1,5 @@
 import { //configNewOrder, 
-    configStandartRequest, requestServer } from "../../../utils/api/api";
+    configStandartRequest, requestServer } from "../../../utils/2api/2api";
 import { OPEN_ORDER_INFO } from "../Modal/Modal";
 
 export const LOAD_ORDER_REQUEST = 'LOAD_ORDER_REQUEST';

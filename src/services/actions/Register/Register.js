@@ -1,5 +1,5 @@
 //выбранный ингредиент
-import { configStandartRequest, requestServer } from "../../../utils/api/api";
+import { configStandartRequest, requestServer } from "../../../utils/2api/2api";
 import { LOGIN_REDIRECTED, LOGIN_REQUEST_SUCCES } from "../Login/Login";
 
 export const CHANGE_CURRENT_REGISTER_INPUT_EMAIL = 'CHANGE_CURRENT_REGISTER_INPUT_EMAIL';
