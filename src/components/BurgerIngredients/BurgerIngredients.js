@@ -8,13 +8,16 @@ import CustomScrollbar from '../CustomScrollbar/CustomScrollbar';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
+
+import { useLocation } from 'react-router-dom';
+
 import { useInView } from 'react-intersection-observer';
 import { refreshTabs } from '../../services/actions/BurgerIngredients/BurgerIngredients';
-import { OPEN_INGREDIENT_FOCUS } from '../../services/actions/Modal/Modal';
+//import { OPEN_INGREDIENT_FOCUS } from '../../services/actions/Modal/Modal';
 function BurgerIngredients({ closeModalCallback }) {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { bunsTabStatus, souceTabStatus, mainTabStatus, ingredients, buns } = useSelector(state => state.burgerIngredients);
-  const { modalData } = useSelector(state => state.modal);
   //для работы индикации Tab
   const [refBun, inViewBun] = useInView({ threshold: 0.2, });
   const [refSouce, inViewSouce] = useInView({ threshold: 0.2, });
@@ -90,12 +93,14 @@ function BurgerIngredients({ closeModalCallback }) {
 
         </CustomScrollbar>
       </section>
-      {
-        modalData === OPEN_INGREDIENT_FOCUS && <Modal onClose={closeModalCallback}>
+      {location.state && location.state.foregroundIngredient
+        //modalData === OPEN_INGREDIENT_FOCUS && <Modal onClose={closeModalCallback}>
+        && <Modal onClose={closeModalCallback}>
           <div className='pt-10 pb-15 pr-10 pl-10'>
-            <IngredientDetails />
+            <IngredientDetails/>
           </div>
-        </Modal>}
+        </Modal>
+      }
     </>
   );
 }

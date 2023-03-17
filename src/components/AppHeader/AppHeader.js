@@ -1,30 +1,37 @@
 import React from 'react';
-import { Logo, BurgerIcon, ListIcon, ProfileIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import HeaderButton from '../HeaderButton/HeaderButton';
 import styles from './AppHeader.module.css';
+import { useParams, useLocation, useNavigate } from "react-router-dom";
+
 function AppHeader() {
-  const [menuMode, setMenuMod] = React.useState('Конструктор');//для интерактива (не нужна по заданию, могу удалить весь интерактив)
-  const pressMenuButton = (value) => {
-    if (value !== menuMode) {
-      setMenuMod(value);
-    }
-  };
+  const location = useLocation();
+  const navigate = useNavigate();
+  
   return (
     <header className={styles.AppHeader}>
       <nav className={`${styles.headerMenuDesktop} pt-4 pb-4`}>
         <div className={styles.leftMenuSide}>
-          <HeaderButton message="Конструктор" clickCallBack={pressMenuButton} statusActive={menuMode === "Конструктор"}>
-            <BurgerIcon type={menuMode === "Конструктор" ? "primary" : "secondary"}></BurgerIcon>
+          <HeaderButton
+            message="Конструктор"
+            clickCallBack={() => { navigate('/'); }}
+            statusActive={(location.pathname === "/"||(location.pathname.indexOf("/ingredients/")===0 ))}>
+            <BurgerIcon type={(location.pathname === "/"||(location.pathname.indexOf("/ingredients/")===0 )) ? "primary" : "secondary"}></BurgerIcon>
           </HeaderButton>
-          <HeaderButton message="Лента заказов" clickCallBack={pressMenuButton} statusActive={menuMode === "Лента заказов"} addClass="ml-2">
-            <ListIcon type={menuMode === "Лента заказов" ? "primary" : "secondary"}></ListIcon>
+          <HeaderButton message="Лента заказов"
+            clickCallBack={() => { navigate('/feed'); }}
+            statusActive={location.pathname === "/feed"}
+            addClass="ml-2">
+            <ListIcon type={location.pathname === "/feed" ? "primary" : "secondary"}></ListIcon>
           </HeaderButton>
         </div>
         <Logo className={styles.centerMenuSide} />
 
-        <div className= {styles.rightMenuSide}>
-          <HeaderButton message="Личный кабинет" clickCallBack={pressMenuButton} statusActive={menuMode === "Личный кабинет"}>
-            <ProfileIcon type={menuMode === "Личный кабинет" ? "primary" : "secondary"}></ProfileIcon>
+        <div className={styles.rightMenuSide}>
+          <HeaderButton message="Личный кабинет"
+            clickCallBack={() => { navigate('/profile'); }}
+            statusActive={location.pathname.indexOf("/profile")===0 }>
+            <ProfileIcon type={(location.pathname.indexOf("/profile")===0) ? "primary" : "secondary"}></ProfileIcon>
           </HeaderButton>
         </div>
       </nav>

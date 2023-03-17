@@ -3,7 +3,8 @@ import {
   CLEAR_ORDER,
   LOAD_ORDER_REQUEST,
   LOAD_ORDER_REQUEST_FAILED,
-  LOAD_ORDER_REQUEST_SUCCES
+  LOAD_ORDER_REQUEST_SUCCES,
+  SUSPEND_ORDER
 } from '../actions/OrderDetails/OrderDetails'
 
 const initialState = {
@@ -37,16 +38,16 @@ export const orderDetailsReducer = (state = initialState, action) => {
         orderRequest: false,
       };
     }
-    case CLEAR_ORDER: {
+    case SUSPEND_ORDER: {
       //устанавливаю флаг unResponded, если пользователь закрыл не увидев ответ с сервера
-      //если функционал возвращения в неуведенный заказ не нужен, эту if удалю
-      if (state.orderRequest) {
-        return {
-          ...state,
-          unResponded: true,
-        }
+      //если функционал возвращения в неуведенный заказ не нужен, удалю
+      return {
+        ...state,
+        unResponded: true,
       }
-      //при этом закрытии, пользователь уже видел заказ, флаг ставлю стандартный
+    }
+    case CLEAR_ORDER: {
+      //при этом закрытии, пользователь уже видел заказ
       return {
         ...initialState,
       };

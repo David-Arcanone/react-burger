@@ -50,7 +50,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
       };
     }
     case MOVE_INGREDIENT: {
-      const cloneOrderIngredients = state.orderIngredients.slice(0); //нельзя напрямую влиять на state, поэтому создам клон для работы 
+      const cloneOrderIngredients = state.orderIngredients.slice(0); //нельзя напрямую влиять на state, поэтому создам клон для работы можно через [...state.orderIngredients]
       cloneOrderIngredients.splice(action.newIndex, 0, cloneOrderIngredients.splice(action.oldIndex, 1)[0]);
       return {
         ...state,

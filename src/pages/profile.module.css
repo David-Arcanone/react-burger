@@ -1,0 +1,32 @@
+.main {
+    margin: 0 auto;
+    padding-top: 120px;
+    display: grid;
+    grid-template-columns: 320px max-content;
+    flex-direction: column;
+    max-width: 1240px;
+    gap: 60px;
+}
+
+.collumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.buttonInterface {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+
+.navLink {
+    text-decoration: none;
+}
+
+
+.menuItem {
+    padding: 17px 0;
+}
+

@@ -1,38 +1,55 @@
 import { useEffect } from 'react';
 import AppHeader from "../AppHeader/AppHeader";
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import styles from './App.module.css';
 import { cleanSelectedIngredients, downloadIngredients } from "../../services/actions/BurgerIngredients/BurgerIngredients";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModal, OPEN_INGREDIENT_FOCUS, OPEN_ORDER_INFO } from '../../services/actions/Modal/Modal';
-import { clearCurrentIngredient } from '../../services/actions/IngredientDetails/IngredientDetails';
-import { clearOrder } from '../../services/actions/OrderDetails/OrderDetails';
+import { closeModal, OPEN_ORDER_INFO } from '../../services/actions/Modal/Modal';
+import { clearOrder, suspendOrder } from '../../services/actions/OrderDetails/OrderDetails';
 import { cleanConstructor } from '../../services/actions/BurgerConstructor/BurgerConstructor';
 
-function App() {
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import HomePage from '../../pages/home';
+import { NotFound } from '../../pages/notFound';
+import Login from '../../pages/login';
+import RegisterPage from '../../pages/register';
+import ForgotPassword from '../../pages/forgotPassword';
+import ResetPassword from '../../pages/resetPassword';
+import Profile from '../../pages/profile';
+import Ingredients from '../../pages/ingredients';
+import UnloggedPage from '../UnloggedPage/UnloggedPage';
+import ProtectedPage from '../ProtectedPage/ProtectedPage';
+
+
+export default function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const background = location.state && location.state.background;
+
   const { readyIngredients } = useSelector(state => state.burgerIngredients);
   const { modalData } = useSelector(state => state.modal);
-  const closeModalFunction =()=> {
-
+  const { orderRequest } = useSelector(state => state.orderDetails)
+  const closeModalFunction = () => {
+    //console.log(location);
     switch (modalData) {
       case (OPEN_ORDER_INFO): {
-        dispatch(clearOrder());
-        //МОЕ МНЕНИЕ: "это лишнее"
+        dispatch(orderRequest ? suspendOrder() : clearOrder());
+        //МОЕ МНЕНИЕ: "это лишнее" могу сделать условие (чтоб не стирать если идет саспенд заявки/ пользователь закрыл не увидев №заказа)
         dispatch(cleanConstructor());//
         dispatch(cleanSelectedIngredients());//
         /*Пользователи как правило желают заказать несколько одинаковых бургеров для всей семьи 
         PS (лучше сделать чекбокс для очистки внутри модального окна или добавить заказ сразу нескольких бургеров)*/
         break;
       }
-      case (OPEN_INGREDIENT_FOCUS): {
-        dispatch(clearCurrentIngredient());
-        break;
-      }
+      /* case (OPEN_INGREDIENT_FOCUS): { //реализовал на основе state в location
+         //dispatch(clearCurrentIngredient());
+         navigate("/", { state: {} });
+         break;
+       }*/
       default: {
+        if (!!location.state.foregroundIngredient) { navigate("/", { state: {} }); }
         break;
       }
     };
@@ -43,20 +60,28 @@ function App() {
   }, [dispatch]);
   return (
     <div className={styles.page}>
-      {readyIngredients && <>
-        <AppHeader />
-        {<main className={`${styles.main} pb-10`}>
+      {readyIngredients &&
+        <>
+          <AppHeader />
           <DndProvider backend={HTML5Backend}>
-            {/*левая половина панель ингредиентов*/}
-            <BurgerIngredients closeModalCallback={closeModalFunction} />
-            {/*правая половина конструктор*/}
-            <BurgerConstructor closeModalCallback={closeModalFunction} />
+            <Routes location={background ? { ...background, state: location.state } : location}>
+              {/*Общедоступные страницы*/}
+              <Route path="/" element={<HomePage closeModal={closeModalFunction} />} />
+              <Route path="/ingredients/:id" element={<Ingredients />} />
+              {/*Защищенная страница*/}
+              <Route path="/profile" element={<ProtectedPage><Profile /></ProtectedPage>} />
+              <Route path="/profile/*" element={<ProtectedPage><NotFound /></ProtectedPage>} />
+              {/*Страницы авторизации*/}
+              <Route path="/login" element={<UnloggedPage><Login /></UnloggedPage>} />
+              <Route path="/register" element={<UnloggedPage><RegisterPage /></UnloggedPage>} />
+              <Route path="/forgot-password" element={<UnloggedPage><ForgotPassword /></UnloggedPage>} />
+              <Route path="/reset-password" element={<UnloggedPage><ResetPassword /></UnloggedPage>} />
+              {/*Если страница не существует*/}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </DndProvider>
-        </main>}
-      </>
-      }
+        </>}
     </div>
   );
 }
-export default App;
 

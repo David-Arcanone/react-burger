@@ -1,3 +1,4 @@
+/*
 import { OPEN_INGREDIENT_FOCUS } from "../Modal/Modal";
 
 //выбранный ингредиент
@@ -19,4 +20,4 @@ export function clearCurrentIngredient() {
     return {
         type: CLEAR_CURRENT_INGREDIENT,
     };
-}
+}*/

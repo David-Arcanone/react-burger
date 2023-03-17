@@ -1,10 +1,12 @@
-import { configNewOrder, getOrderFromServer, requestServer } from "../../../utils/Api/Api";
+import { //configNewOrder, 
+    configStandartRequest, requestServer } from "../../../utils/api/api";
 import { OPEN_ORDER_INFO } from "../Modal/Modal";
 
 export const LOAD_ORDER_REQUEST = 'LOAD_ORDER_REQUEST';
 export const LOAD_ORDER_REQUEST_SUCCES = 'LOAD_ORDER_REQUEST_SUCCES';
 export const LOAD_ORDER_REQUEST_FAILED = 'LOAD_ORDER_REQUEST_FAILED';
 export const CLEAR_ORDER = 'CLEAR_ORDER';
+export const SUSPEND_ORDER = 'SUSPEND_ORDER';
 
 export function loadOrderToServer(orderList) {
     return function (dispatch) {
@@ -14,7 +16,8 @@ export function loadOrderToServer(orderList) {
         dispatch({
             type: LOAD_ORDER_REQUEST
         });
-        requestServer("/orders",configNewOrder(orderList)).then(data => {
+        requestServer("/orders",//configNewOrder(orderList)
+        configStandartRequest({ingredients: orderList},"POST")).then(data => {
             dispatch({
                 type: LOAD_ORDER_REQUEST_SUCCES,
                 payloadOrderName: data.name,
@@ -34,5 +37,10 @@ export function loadOrderToServer(orderList) {
 export function clearOrder() {
     return {
         type: CLEAR_ORDER,
+    };
+}
+export function suspendOrder() {
+    return {
+        type: SUSPEND_ORDER,
     };
 }

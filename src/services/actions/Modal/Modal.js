@@ -9,6 +9,12 @@ export function openOrderInfo() {
     };
 }
 
+export function openIngredientFocus() {
+    return {
+        type: OPEN_INGREDIENT_FOCUS,
+    };
+}
+
 export function closeModal() {
     return {
         type: CLOSE_MODAL,
