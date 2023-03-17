@@ -1,4 +1,4 @@
-import { requestServer } from '../../../utils/2api/2api';
+import { requestServer } from '../../../utils/api/api';
 import { INIT_CONSTRUCTOR_LIBRARY, REFRESH_PRICE } from "../BurgerConstructor/BurgerConstructor"
 //инициализация
 export const DOWNLOAD_INGREDIENTS_REQUEST = 'DOWNLOAD_INGREDIENTS_REQUEST';
