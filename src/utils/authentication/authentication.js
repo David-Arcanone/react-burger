@@ -1,4 +1,4 @@
-import { configStandartRequest, requestServer } from "../api/api";
+import { configStandartRequest, requestServer } from "../2api/2api";
 
 export function setCookie(name, value, props) {
   props = props || {};
