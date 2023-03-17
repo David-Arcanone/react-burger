@@ -1,4 +1,4 @@
-import { configAdvancedRequest, configStandartRequest, requestServer, requestServerWithRefresh } from "../../../utils/2api/2api";
+import { configAdvancedRequest, configStandartRequest, requestServer, requestServerWithRefresh } from "../../../utils/api/api";
 export const CHANGE_CURRENT_LOGIN_INPUT_EMAIL = 'CHANGE_CURRENT_LOGIN_INPUT_EMAIL';
 export const CHANGE_CURRENT_LOGIN_INPUT_PASSWORD = 'CHANGE_CURRENT_LOGIN_INPUT_PASSWORD';
 export const SHOW_CURRENT_LOGIN_INPUT_PASSWORD = 'SHOW_CURRENT_LOGIN_INPUT_PASSWORD';

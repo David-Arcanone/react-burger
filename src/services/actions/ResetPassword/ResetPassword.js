@@ -1,6 +1,6 @@
 //выбранный ингредиент
 
-import { configStandartRequest, requestServer } from "../../../utils/2api/2api";
+import { configStandartRequest, requestServer } from "../../../utils/api/api";
 
 export const CHANGE_CURRENT_RESET_INPUT_EMAIL = 'CHANGE_CURRENT_RESET_INPUT_EMAIL';
 export const CHANGE_CURRENT_RESET_INPUT_PASSWORD = 'CHANGE_CURRENT_RESET_INPUT_PASSWORD';
