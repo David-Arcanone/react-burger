@@ -23,10 +23,11 @@
 Реализован вход в систему, востановление пароля, регистрация пользователя.
 Окна регистрации недоступны авторизованному пользователю. Личный кабинет недоступен неавторизованному пользователю.
 При нажатии на оформление заказы происходит переадресация на вход в аккаунт.
+Типизировано по Typescript. Сторэдж тоже реализован в Typesript.
 
 
 **Технологии**
-html, css, js, библиотека react, redux , react-redux , redux-thunk , react-dnd , react-dnd-html5-backend, react-router-dom . Применяется шрифт JetBrains Mono и Набор UI-компонентов для курсового проекта React Developer Burger Ui Components.
+html, css, js, typescript, библиотека react, redux , react-redux , redux-thunk , react-dnd , react-dnd-html5-backend, react-router-dom . Применяется шрифт JetBrains Mono и Набор UI-компонентов для курсового проекта React Developer Burger Ui Components.
 Используется пакет react-intersection-observer и react-custom-scrollbars-2 для скролла ингредиентов в панели ингредиентов слева.
 используется webpack, .nojekyll и normalize.css.
 
