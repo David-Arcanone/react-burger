@@ -3,21 +3,17 @@ import IngredientCard from '../IngredientCard/IngredientCard';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import styles from './BurgerIngredients.module.css';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import {IngredientDetails} from '../IngredientDetails/IngredientDetails';
 import CustomScrollbar from '../CustomScrollbar/CustomScrollbar';
-import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-
-
 import { useLocation } from 'react-router-dom';
-
 import { useInView } from 'react-intersection-observer';
 import { refreshTabs } from '../../services/actions/BurgerIngredients/BurgerIngredients';
-//import { OPEN_INGREDIENT_FOCUS } from '../../services/actions/Modal/Modal';
+import { useBurgerAppDispatch, useBurgerAppSelector } from '../../utils/hooks/hooks';
+
 function BurgerIngredients({ closeModalCallback }) {
-  const dispatch = useDispatch();
+  const dispatch = useBurgerAppDispatch();
   const location = useLocation();
-  const { bunsTabStatus, souceTabStatus, mainTabStatus, ingredients, buns } = useSelector(state => state.burgerIngredients);
+  const { bunsTabStatus, souceTabStatus, mainTabStatus, ingredients, buns } = useBurgerAppSelector(state => state.burgerIngredients);
   //для работы индикации Tab
   const [refBun, inViewBun] = useInView({ threshold: 0.2, });
   const [refSouce, inViewSouce] = useInView({ threshold: 0.2, });
@@ -104,8 +100,5 @@ function BurgerIngredients({ closeModalCallback }) {
     </>
   );
 }
-BurgerIngredients.propTypes = {
-  closeModalCallback: PropTypes.func.isRequired,
-};
 export default BurgerIngredients;
 
