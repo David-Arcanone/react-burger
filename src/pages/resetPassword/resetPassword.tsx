@@ -1,7 +1,7 @@
 
 import styles from './resetPassword.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import React,{ useEffect } from 'react';
 import { Navigate } from "react-router-dom";
 import { changeCurrentResetInputCode, changeCurrentResetInputPassword, clearCurrentResetInputsPage2ResetPassword, hideCurrentResetInputsPassword, makeResetPasswordRequest, showCurrentResetInputsPassword } from '../../services/actions/ResetPassword/ResetPassword';
@@ -9,6 +9,7 @@ import { useBurgerAppDispatch, useBurgerAppSelector } from '../../utils/hooks/ho
 
 const ResetPassword:React.FC =()=> {
   const dispatch = useBurgerAppDispatch();
+  const location = useLocation();
   const { code, password } = useBurgerAppSelector(state => state.reset.inputsPage2ResetPassword);
   const { isPasswordHidden, isLoadingResetPassword, isCodeSend, isResetSucces } = useBurgerAppSelector(state => state.reset);
 
@@ -16,7 +17,7 @@ const ResetPassword:React.FC =()=> {
     return () => {
       dispatch(clearCurrentResetInputsPage2ResetPassword());
     };
-  }, []);
+  }, [dispatch]);
 
   if (isResetSucces) { return <Navigate to="/login" replace={true} />; }
   if (!isCodeSend) { return <Navigate to="/forgot-password" replace={true} />; };
@@ -55,7 +56,7 @@ const ResetPassword:React.FC =()=> {
           <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20">Сохранить</Button>
         </form>}
       <p className="text text_type_main-default">
-        Вспомнили пароль?<Link to={{ pathname: `/login` }} replace className={`text text_type_main-default pl-2 ${styles.navLink}`}>Войти</Link>
+        Вспомнили пароль?<Link state={{...location.state}} to={{ pathname: `/login` }} replace className={`text text_type_main-default pl-2 ${styles.navLink}`}>Войти</Link>
       </p>
     </main>
   );

@@ -2,11 +2,13 @@
 import styles from './register.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useEffect } from "react";
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import { changeCurrentRegisterInputEmail, changeCurrentRegisterInputName, changeCurrentRegisterInputPassword, clearCurrentRegisterInputs, hideCurrentRegisterInputPassword, makeRegisterRequest, showCurrentRegisterInputPassword } from '../../services/actions/Register/Register';
 import { useBurgerAppDispatch, useBurgerAppSelector } from '../../utils/hooks/hooks';
 
 const RegisterPage: React.FC = () => {
+  
+  const location = useLocation();
   const dispatch = useBurgerAppDispatch();
   const { email, password, name } = useBurgerAppSelector(state => state.register.inputs);
   const { isPasswordHidden, isRequesting } = useBurgerAppSelector(state => state.register);
@@ -16,7 +18,7 @@ const RegisterPage: React.FC = () => {
       dispatch(hideCurrentRegisterInputPassword());
       dispatch(clearCurrentRegisterInputs());
     };
-  }, [dispatch, hideCurrentRegisterInputPassword, clearCurrentRegisterInputs]);
+  }, [dispatch]);
 
   if (loginStateChange && isLogged) return <Navigate to="/" replace={true} />;
   return (
@@ -65,7 +67,7 @@ const RegisterPage: React.FC = () => {
           <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20">Зарегистрироваться</Button>
         </form>}
       <p className="text text_type_main-default">
-        Уже зарегистрированы?<Link to={{ pathname: `/login` }} replace className={`text text_type_main-default pl-2 ${styles.navLink}`}>Войти</Link>
+        Уже зарегистрированы?<Link state={{...location.state}} to={{ pathname: `/login` }} replace className={`text text_type_main-default pl-2 ${styles.navLink}`}>Войти</Link>
       </p>
     </main>
   );

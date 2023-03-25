@@ -2,23 +2,25 @@
 import styles from './login.module.css';
 import React from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { changeCurrentLoginInputEmail, changeCurrentLoginInputPassword, clearCurrentLoginInputs, hideCurrentLoginInputPassword, makeLoginRequest, showCurrentLoginInputPassword } from '../../services/actions/Login/Login';
 import { useBurgerAppDispatch, useBurgerAppSelector } from '../../utils/hooks/hooks';
 
 
 const Login:React.FC=()=> {
   const dispatch = useBurgerAppDispatch();
+  const location = useLocation();
+  //const previousLocation:string = location.state?.previous ?? '/'; 
+  //console.log(location);
   const { email, password } = useBurgerAppSelector(state => state.login.inputs);
-  const { isPasswordHidden, isLoading, loginStateChange, isLogged } = useBurgerAppSelector(state => state.login);
+  const { isPasswordHidden, isLoading} = useBurgerAppSelector(state => state.login);
   React.useEffect(() => {
     return () => {
       dispatch(hideCurrentLoginInputPassword());
       dispatch(clearCurrentLoginInputs());
     };
-  }, [dispatch , hideCurrentLoginInputPassword, clearCurrentLoginInputs]);
-
-  if (loginStateChange && isLogged) return <Navigate to="/" replace={true} />;
+  }, [dispatch ]);
+  //if (loginStateChange && isLogged) return <Navigate to={previousLocation} replace={true} />;
   return (
     <main className={styles.main}>
       <h1 className="text text_type_main-medium pb-6">Вход</h1>
@@ -53,10 +55,10 @@ const Login:React.FC=()=> {
         <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20">Войти</Button>
       </form>}
       <p className="text text_type_main-default pb-4">
-        Вы — новый пользователь?<Link to={{ pathname: `/register` }} replace className={`text text_type_main-default pl-2 ${styles.navLink}`}>Зарегистрироваться</Link>
+        Вы — новый пользователь?<Link state={{...location.state}} to={{ pathname: `/register` }} replace className={`text text_type_main-default pl-2 ${styles.navLink}`}>Зарегистрироваться</Link>
       </p>
       <p className="text text_type_main-default">
-        Забыли пароль?<Link to={{ pathname: `/forgot-password` }} replace className={`text text_type_main-default pl-2 ${styles.navLink}`}>Восстановить пароль</Link>
+        Забыли пароль?<Link state={{...location.state}} to={{ pathname: `/forgot-password` }} replace className={`text text_type_main-default pl-2 ${styles.navLink}`}>Восстановить пароль</Link>
       </p>
     </main>
   );

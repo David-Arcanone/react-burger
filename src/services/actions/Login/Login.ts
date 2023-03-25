@@ -10,6 +10,7 @@ import {
     LOGIN_REQUEST,
     LOGIN_REQUEST_ERROR,
     LOGIN_REQUEST_SUCCES,
+    LOGIN_RELOGIN,
     LOGOUT_REQUEST,
     LOGOUT_REQUEST_ERROR,
     LOGOUT_REQUEST_SUCCES,
@@ -26,6 +27,10 @@ export interface ILoginRequestSucces {
     type: typeof LOGIN_REQUEST_SUCCES;
     newRefreshToken: string;
     newAccesToken: string;
+};
+
+export interface ILoginRelogin {
+    type: typeof LOGIN_RELOGIN;
 };
 
 export interface ILoginRequestError {
@@ -85,6 +90,7 @@ export type TLoginActions = ITrackLogin
     | ILoginRequest
     | ILoginRequestError
     | ILoginRequestSucces
+    | ILoginRelogin
     | IAuthChecked;
 
 export function processLoginRequestSucces(newRefreshToken: string, newAccesToken: string): ILoginRequestSucces {
@@ -100,7 +106,6 @@ export const makeLoginRequest: AppThunk = (typedEmail: string, typedPassword: st
         type: LOGIN_REQUEST
     });
     requestServer<TRequestDataLogin>("/auth/login", configStandartRequest<TRequestBodyLogin>({ email: typedEmail, password: typedPassword }, "POST")).then(data => {
-        //console.log(data);
         dispatch(processLoginRequestSucces(data.refreshToken, data.accessToken));
     })
         .catch(() => {
@@ -116,7 +121,7 @@ export const makeLogOut: AppThunk = () => (dispatch: AppDispatch) => {
     dispatch({
         type: LOGOUT_REQUEST
     });
-    
+
     requestServerWithRefresh<TRequestDataLogout>("/auth/logout",
         configAdvancedRequest<TRequestBodyLogout>({ token: window.localStorage.getItem("refreshTokenBurger") }, "POST")).then((data) => {
             console.log("logged out");
@@ -172,9 +177,12 @@ export function trackLogin(): ITrackLogin {
         type: TRACK_LOGIN,
     };
 }
+
 export const checkUserAuth: AppThunk = () => (dispatch: AppDispatch) => {
     if (getCookie("accessTokenBurger")) {
-        requestServerWithRefresh<TRequestDataUserInfo>("/auth/user", configAdvancedRequestNoBody("GET")).finally(() => {
+        requestServerWithRefresh<TRequestDataUserInfo>("/auth/user", configAdvancedRequestNoBody("GET")).then(() => {
+            dispatch({ type: LOGIN_RELOGIN })
+        }).finally(() => {
             dispatch({ type: AUTH_CHECKED });
         });
     } else {

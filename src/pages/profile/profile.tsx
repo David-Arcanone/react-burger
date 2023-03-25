@@ -10,6 +10,7 @@ import { useBurgerAppDispatch, useBurgerAppSelector } from '../../utils/hooks/ho
 
 const Profile:React.FC =()=> {
     const dispatch = useBurgerAppDispatch();
+    
     const { email, password, name } = useBurgerAppSelector(state => state.profile.inputs);
     const { leggitEmail, leggitName } = useBurgerAppSelector(state => state.profile.leggitInputs);
     const { isGettingProfileInfo, isSendingNewProfileInfo } = useBurgerAppSelector(state => state.profile);
@@ -30,7 +31,7 @@ const Profile:React.FC =()=> {
         dispatch(resetCurrentProfileInputsToValue());
         return () => {
         };
-    }, [dispatch, resetCurrentProfileInputsToValue]);
+    }, [dispatch]);
 
     if (loginStateChange && !isLogged) return <Navigate to="/login" replace={true} />;
 

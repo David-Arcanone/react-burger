@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import IngredientCard from '../IngredientCard/IngredientCard';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
@@ -10,7 +10,7 @@ import { useInView } from 'react-intersection-observer';
 import { refreshTabs } from '../../services/actions/BurgerIngredients/BurgerIngredients';
 import { useBurgerAppDispatch, useBurgerAppSelector } from '../../utils/hooks/hooks';
 
-function BurgerIngredients({ closeModalCallback }) {
+const BurgerIngredients:React.FC<{closeModalCallback: ()=>void}> =({ closeModalCallback })=> {
   const dispatch = useBurgerAppDispatch();
   const location = useLocation();
   const { bunsTabStatus, souceTabStatus, mainTabStatus, ingredients, buns } = useBurgerAppSelector(state => state.burgerIngredients);
@@ -19,29 +19,29 @@ function BurgerIngredients({ closeModalCallback }) {
   const [refSouce, inViewSouce] = useInView({ threshold: 0.2, });
   const [refMain, inViewMain] = useInView({ threshold: 0.2, });
   //для работы кнопок Tab
-  const targetBun = useRef();
-  const targetSouce = useRef();
-  const targetMain = useRef();
+  const targetBun = useRef<HTMLDivElement>(null);
+  const targetSouce = useRef<HTMLDivElement>(null);
+  const targetMain = useRef<HTMLDivElement>(null);
   useEffect(() => {
     dispatch(refreshTabs(inViewBun, inViewSouce, inViewMain));
-  }, [inViewBun, inViewSouce, inViewMain]);
+  }, [inViewBun, inViewSouce, inViewMain, dispatch]);
   return (
     <>
       <section className={`${styles.BurgerIngredients} mr-5 ml-5`}>
         <h1 className='pt-10 pb-5 text text_type_main-large'>Соберите бургер</h1>
         <div className={`pb-8 ${styles.tabContainer}`}>
           <Tab value="buns" active={bunsTabStatus} onClick={() => {
-            targetBun.current.scrollIntoView({ behavior: "smooth" })
+            if(targetBun.current) targetBun.current.scrollIntoView({ behavior: "smooth" })
           }}>
             Булки
           </Tab>
           <Tab value="sauce" active={souceTabStatus} onClick={() => {
-            targetSouce.current.scrollIntoView({ behavior: "smooth" })
+            if(targetSouce.current)targetSouce.current.scrollIntoView({ behavior: "smooth" })
           }}>
             Соусы
           </Tab>
           <Tab value="main" active={mainTabStatus} onClick={() => {
-            targetMain.current.scrollIntoView({ behavior: "smooth" })
+            if(targetMain.current)targetMain.current.scrollIntoView({ behavior: "smooth" })
           }}>
             Начинки
           </Tab>

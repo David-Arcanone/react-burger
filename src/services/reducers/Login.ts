@@ -1,6 +1,6 @@
 import { deleteCookie, setCookie } from "../../utils/authentication/authentication";
 import { TLoginActions } from "../actions/Login/Login";
-import { AUTH_CHECKED, CHANGE_CURRENT_LOGIN_INPUT_EMAIL, CHANGE_CURRENT_LOGIN_INPUT_PASSWORD, CLEAR_CURRENT_LOGIN_INPUTS, HIDE_CURRENT_LOGIN_INPUT_PASSWORD, TRACK_LOGIN, LOGIN_REQUEST, LOGIN_REQUEST_ERROR, LOGIN_REQUEST_SUCCES, LOGOUT_REQUEST, LOGOUT_REQUEST_ERROR, LOGOUT_REQUEST_SUCCES, SHOW_CURRENT_LOGIN_INPUT_PASSWORD } from "../constants/Login/Login";
+import { AUTH_CHECKED, CHANGE_CURRENT_LOGIN_INPUT_EMAIL, CHANGE_CURRENT_LOGIN_INPUT_PASSWORD, CLEAR_CURRENT_LOGIN_INPUTS, HIDE_CURRENT_LOGIN_INPUT_PASSWORD, TRACK_LOGIN, LOGIN_REQUEST, LOGIN_REQUEST_ERROR, LOGIN_REQUEST_SUCCES, LOGOUT_REQUEST, LOGOUT_REQUEST_ERROR, LOGOUT_REQUEST_SUCCES, SHOW_CURRENT_LOGIN_INPUT_PASSWORD, LOGIN_RELOGIN } from "../constants/Login/Login";
 import { ILoginState } from "../types/Login/Login";
 
 const initialState:ILoginState = {
@@ -63,7 +63,12 @@ export const loginReducer = (state = initialState, action: TLoginActions):ILogin
         isLoading: false,
         loginStateChange:true,
         isLogged:true,
-        //isAuthChecked:true,
+      };
+    }
+    case LOGIN_RELOGIN: {
+      return {
+        ...state,
+        isLogged:true,
       };
     }
     case LOGIN_REQUEST_ERROR: {
