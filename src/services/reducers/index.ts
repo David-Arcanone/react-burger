@@ -8,6 +8,8 @@ import { orderDetailsReducer } from './OrderDetails';
 import { profileReducer } from './Profile';
 import { registerReducer } from './Register';
 import { resetPasswordReducer } from './ResetPassword';
+import { wsFeedReducer } from './wsFeed';
+import { wsProfileOrdersReducer } from './wsProfileOrders';
 
 export const rootReducer = combineReducers({
   orderDetails: orderDetailsReducer,
@@ -17,5 +19,7 @@ export const rootReducer = combineReducers({
   profile: profileReducer,
   reset: resetPasswordReducer,
   burgerIngredients: burgerIngredientsReducer,
-  modal: modalReducer
+  modal: modalReducer,
+  feed: wsFeedReducer,
+  profileOrders: wsProfileOrdersReducer,
 });

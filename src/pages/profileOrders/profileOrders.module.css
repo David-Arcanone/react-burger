@@ -1,0 +1,55 @@
+.main {
+    margin: 0 auto;
+    padding-top: 120px;
+    display: grid;
+    grid-template-columns: 320px 860px;
+    flex-direction: column;
+    max-width: 1240px;
+    gap: 60px;
+}
+
+.collumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.collumnOrders {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100px;
+}
+
+.logOrderCardContainer {
+    padding-right: 16px;
+    padding-bottom: 24px;
+}
+
+.xxxx {
+    background-color: aqua;
+    min-height: 100px;
+}
+
+.buttonInterface {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.navLink {
+    text-decoration: none;
+}
+
+.menuItem {
+    padding: 17px 0;
+}
+
+.filterColumn {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.profileModal{
+  width: 640px;
+}
