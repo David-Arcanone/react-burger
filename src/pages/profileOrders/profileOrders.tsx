@@ -38,9 +38,9 @@ const ProfileOrders: React.FC<{ closeModal: () => void; }> = ({ closeModal }) =>
                 <div className={styles.collumnOrders}>
                     <CustomScrollbar customHeight={916} customOffsetBottom={64} sizeType="big">
                         <ul className={styles.filterColumn}>
-                            {ordersList.map((order, index) => <div className={`${styles.logOrderCardContainer}`} key={index}>
+                            {ordersList.map((order, index) => <li className={`${styles.logOrderCardContainer}`} key={index}>
                                 <LogOrderCard order={order} isProfile={true} />
-                            </div>)}
+                            </li>)}
                         </ul>
                     </CustomScrollbar>  </div>}
         </main>
