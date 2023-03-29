@@ -24,6 +24,7 @@
 .logOrderCardContainer {
     padding-right: 16px;
     padding-bottom: 24px;
+    list-style: none;
 }
 
 .xxxx {
@@ -48,6 +49,8 @@
 .filterColumn {
     display: flex;
     flex-direction: column-reverse;
+    margin: 0;
+    padding: 0;
 }
 
 .profileModal{

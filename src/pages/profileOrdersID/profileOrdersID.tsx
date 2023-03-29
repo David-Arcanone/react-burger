@@ -17,10 +17,10 @@ export const ProfileOrdersID: React.FC = () => {
   }, [dispatch]);
   return (
     <main className={styles.main}>
-      {(firstPack && ordersList) ? <div className={`${styles.profileOrdersElement}`}>
-        <OrderDetailsFromList isModal={false} orderCurrent={ordersList.find((order) => order._id === id) ?? ordersList[0]} />
-      </div> : <p>загрузка</p>
-      }
+      <div className={`${styles.profileOrdersElement}`}>
+      {(firstPack && ordersList) ?<OrderDetailsFromList isModal={false} orderCurrent={ordersList.find((order) => order._id === id) ?? ordersList[0]} />
+        : <p className='text text_type_main-large '>загрузка</p>
+      }</div> 
     </main>
   );
 }

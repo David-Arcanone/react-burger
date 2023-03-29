@@ -15,7 +15,7 @@ const ProfileOrders: React.FC<{ closeModal: () => void; }> = ({ closeModal }) =>
     const location = useLocation();
     const { isGettingProfileInfo, isSendingNewProfileInfo } = useBurgerAppSelector(state => state.profile);//вдруг с профиля изменили и сразу перешли
     const { loginStateChange, isLogged } = useBurgerAppSelector(state => state.login);
-    const { ordersList } = useBurgerAppSelector((state) => state.profileOrders);
+    const { ordersList, firstPack } = useBurgerAppSelector((state) => state.profileOrders);
     useEffect(() => {
         console.log("start ws profile")
         dispatch(wsProfileOrdersConnectionStart());
@@ -37,17 +37,17 @@ const ProfileOrders: React.FC<{ closeModal: () => void; }> = ({ closeModal }) =>
             {(isGettingProfileInfo || isSendingNewProfileInfo) ? <p className="text text_type_main-large">ЗАГРУЗКА...</p> :
                 <div className={styles.collumnOrders}>
                     <CustomScrollbar customHeight={916} customOffsetBottom={64} sizeType="big">
-                        <div className={styles.filterColumn}>
-                            {ordersList.map((order) => <div className={`${styles.logOrderCardContainer}`}>
+                        <ul className={styles.filterColumn}>
+                            {ordersList.map((order, index) => <div className={`${styles.logOrderCardContainer}`} key={index}>
                                 <LogOrderCard order={order} isProfile={true} />
                             </div>)}
-                        </div>
+                        </ul>
                     </CustomScrollbar>  </div>}
         </main>
         {location.state && location.state.foregroundIngredient
         && <Modal onClose={closeModal}>
           <div className={`pt-15 pb-15 pr-10 pl-10 ${styles.profileModal}`}>
-            <OrderDetailsFromList isModal={true} orderCurrent={ordersList.find((order)=>order._id===location.state.foregroundIngredient)??ordersList[0]}/>
+            {firstPack?<OrderDetailsFromList isModal={true} orderCurrent={ordersList.find((order)=>order._id===location.state.foregroundIngredient)??ordersList[0]}/>:<p>загрузка</p>}
           </div>
         </Modal>
       }

@@ -12,7 +12,7 @@ import OrderDetailsFromList from "../../components/OrderDetailsFromList/OrderDet
 const Feed: React.FC<{ closeModal: () => void; }> = ({ closeModal }) => {
   const dispatch = useBurgerAppDispatch();
   const location = useLocation();
-  const { ordersList, total, totalToday } = useBurgerAppSelector((state) => state.feed);
+  const { ordersList, total, totalToday,firstPack } = useBurgerAppSelector((state) => state.feed);
   React.useEffect(() => {
     console.log("start ws")
     dispatch(wsFeedSConnectionStart());
@@ -69,7 +69,8 @@ const Feed: React.FC<{ closeModal: () => void; }> = ({ closeModal }) => {
         //modalData === OPEN_INGREDIENT_FOCUS && <Modal onClose={closeModalCallback}>
         && <Modal onClose={closeModal}>
           <div className={`pt-15 pb-15 pr-10 pl-10 ${styles.feedModal}`}>
-            <OrderDetailsFromList isModal={true} orderCurrent={ordersList.find((order)=>order._id===location.state.foregroundIngredient)??ordersList[0]}/>
+            {firstPack?<OrderDetailsFromList isModal={true} orderCurrent={ordersList.find((order)=>order._id===location.state.foregroundIngredient)??ordersList[0]}/>
+            :<p className="text text_type_main-large ">загрузка</p>}
           </div>
         </Modal>
       }
