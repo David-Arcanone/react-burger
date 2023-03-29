@@ -1,4 +1,4 @@
-import { configStandartRequest, requestServer } from "../../../utils/api/api";
+import { configAdvancedRequest, configStandartRequest, requestServer, requestServerWithRefresh } from "../../../utils/api/api";
 import { CLEAR_ORDER, LOAD_ORDER_REQUEST, LOAD_ORDER_REQUEST_FAILED, LOAD_ORDER_REQUEST_SUCCES, SUSPEND_ORDER } from "../../constants/OrderDetails/OrderDetails";
 import { AppDispatch, AppThunk } from "../../types";
 import { TRequestBodyOrder, TRequestDataOrder } from "../../types/api/api";
@@ -37,7 +37,8 @@ export const loadOrderToServer: AppThunk = (orderList: string[]) => (dispatch: A
     dispatch({
         type: LOAD_ORDER_REQUEST
     });
-    requestServer<TRequestDataOrder>("/orders", configStandartRequest<TRequestBodyOrder>({ ingredients: orderList }, "POST")).then(data => {
+    requestServerWithRefresh<TRequestDataOrder>("/orders", configAdvancedRequest<TRequestBodyOrder>({ ingredients: orderList }, "POST")).then(data => {
+        console.log(data);
         dispatch({
             type: LOAD_ORDER_REQUEST_SUCCES,
             payloadOrderName: data.name,

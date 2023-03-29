@@ -25,7 +25,7 @@ const AppHeader: React.FC = () => {
             <ListIcon type={location.pathname === "/feed" ? "primary" : "secondary"}></ListIcon>
           </HeaderButton>
         </div>
-        <div className={styles.centerMenuSide}><Logo /></div>
+        <div className={styles.centerMenuSide} onClick={()=>{navigate("/")}}><Logo/></div>
         <div className={styles.rightMenuSide}>
           <HeaderButton message="Личный кабинет"
             clickCallBack={() => { navigate('/profile'); }}

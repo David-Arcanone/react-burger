@@ -9,6 +9,8 @@ import { TResetPasswordActions } from "../actions/ResetPassword/ResetPassword";
 import { store } from "../store/store";
 import { ThunkAction /*, ThunkDispatch*/ } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
+import { TWsFeedActions } from "../actions/wsFeed/wsFeed";
+import { TWsProfileOrdersActions } from "../actions/wsProfileOrders/wsProfileOrders";
 
 export type RootState = ReturnType<typeof store.getState>;
 export type TApplicationActions = TBurgerConstructorActions
@@ -18,7 +20,9 @@ export type TApplicationActions = TBurgerConstructorActions
     | TOrderDetailsActions
     | TProfileActions
     | TRegisterActions
-    | TResetPasswordActions;
+    | TResetPasswordActions
+    | TWsFeedActions
+    | TWsProfileOrdersActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<
     ThunkAction<TReturn, Action, RootState, TApplicationActions>

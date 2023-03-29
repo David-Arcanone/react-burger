@@ -29,4 +29,5 @@
 
 .centerMenuSide {
   grid-area: center-focus;
+  cursor: pointer;
 }

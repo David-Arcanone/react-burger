@@ -20,6 +20,10 @@ import {UnloggedPage} from '../UnloggedPage/UnloggedPage';
 import {ProtectedPage} from '../ProtectedPage/ProtectedPage';
 import { useBurgerAppDispatch, useBurgerAppSelector } from '../../utils/hooks/hooks';
 import { OPEN_ORDER_INFO } from '../../services/constants/Modal/Modal';
+import Feed from '../../pages/feed/feed';
+import ProfileOrders from '../../pages/profileOrders/profileOrders';
+import { FeedOrdersID } from '../../pages/feedOrdersID/feedOrdersID';
+import { ProfileOrdersID } from '../../pages/profileOrdersID/profileOrdersID';
 
 export const App:FunctionComponent =()=> {
   const dispatch = useBurgerAppDispatch();
@@ -38,7 +42,7 @@ export const App:FunctionComponent =()=> {
         break;
       }
       default: {
-        if (!!location.state.foregroundIngredient) { navigate("/", { state: {} }); }
+        if (!!location.state.foregroundIngredient) { navigate(-1); }
         break;
       }
     };
@@ -46,7 +50,7 @@ export const App:FunctionComponent =()=> {
   }
   useEffect(() => {
     dispatch(downloadIngredients());
-  }, [dispatch, downloadIngredients]);
+  }, [dispatch]);
   return (
     <div className={styles.page}>
       {readyIngredients &&
@@ -56,10 +60,15 @@ export const App:FunctionComponent =()=> {
             <Routes location={background ? { ...background, state: location.state } : location}>
               {/*Общедоступные страницы*/}
               <Route path="/" element={<HomePage closeModal={closeModalFunction} />} />
+              <Route path="/feed" element={<Feed closeModal={closeModalFunction} />} />
+              <Route path="/feed/:id" element={<FeedOrdersID />} />
               <Route path="/ingredients/:id" element={<Ingredients />} />
               {/*Защищенная страница*/}
               <Route path="/profile" element={<ProtectedPage><Profile /></ProtectedPage>} />
-              <Route path="/profile/*" element={<ProtectedPage><NotFound /></ProtectedPage>} />
+              <Route path="/profile/orders" element={<ProtectedPage><ProfileOrders closeModal={closeModalFunction}/></ProtectedPage>} />
+              
+              <Route path="/profile/orders/:id" element={<ProtectedPage> <ProfileOrdersID/> </ProtectedPage>} />
+              {/*<Route path="/profile/*" element={<ProtectedPage><NotFound /></ProtectedPage>} />*/}
               {/*Страницы авторизации*/}
               <Route path="/login" element={<UnloggedPage><Login /></UnloggedPage>} />
               <Route path="/register" element={<UnloggedPage><RegisterPage /></UnloggedPage>} />

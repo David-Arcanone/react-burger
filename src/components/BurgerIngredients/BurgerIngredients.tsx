@@ -46,7 +46,7 @@ const BurgerIngredients:React.FC<{closeModalCallback: ()=>void}> =({ closeModalC
             Начинки
           </Tab>
         </div>
-        <CustomScrollbar customHeight={716} customOffsetBottom={52}>
+        <CustomScrollbar customHeight={716} customOffsetBottom={52} sizeType="small">
           <div ref={targetBun}>
             <h2 className='text text_type_main-medium pb-6'>Булки</h2>
             <ul className={`${styles.ingredientList} pl-1 pr-1 pb-2`} ref={refBun}>

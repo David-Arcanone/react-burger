@@ -1,0 +1,59 @@
+.headerForModal {
+    align-self: flex-start;
+}
+
+.doneOrder {
+    color: #00CCCC;
+}
+
+.priceBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+.totalLine{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.scrollbarOrder {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scrollbar-width: 8px;
+    scrollbar-color: #8585AD #2F2F37;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 312px;
+    margin: 0;
+    padding: 0;
+}
+
+
+.scrollbarOrder::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollbarOrder::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.scrollbarOrder::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+.scrollbarInnerElement{
+    display: grid;
+    grid-template-columns: min-content 1fr max-content;
+    gap: 16px;
+    list-style: none;
+    align-items: center;
+}
+.scrollbarInnerElementNotModal{
+    width: 608px;
+}
+.scrollbarInnerElementModal{
+    width: 608px;
+}

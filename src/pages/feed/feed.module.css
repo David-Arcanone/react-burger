@@ -1,0 +1,54 @@
+.main {
+  margin: 0 auto;
+  max-width: 1240px;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: 600px 1fr;
+  height: 1fr;
+  gap: 60px;
+}
+
+.logOrderCardContainer {
+  padding: 0 16px 16px 0;
+  /*padding-right: 16px;
+  padding-bottom: 16px;*/
+  list-style: none;
+}
+
+.statusOfOrders {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+}
+
+.listOfOrders {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(10, min-content);
+  grid-template-columns: 1fr 1fr;
+  row-gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.ordersThatAreReady {
+  color: #00CCCC;
+}
+
+.ordersInListColumns {
+  list-style: none;
+}
+
+.filterColumn {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.feedModal{
+  width: 640px;
+}
+.feedListUL{
+  padding: 0;
+  margin: 0;
+}

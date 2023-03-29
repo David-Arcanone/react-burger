@@ -1,0 +1,52 @@
+
+.framedPicture{
+  overflow: hidden;
+  position: relative;
+  height: 64px;
+  width: 64px;
+  border-radius: 32px;
+  background: linear-gradient(#801AB2, #4C4CFF);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  
+}
+.onePartOfArray{
+  margin-right: -16px;
+}
+
+.framedPicture::after{
+  content: "";
+  position: absolute;
+  width:60px;
+  height: 60px;
+  background:  #1C1C21;
+  border-radius:  30px;
+}
+.onePartOfArray::after{
+  content: "";
+  position: absolute;
+  width:60px;
+  height: 60px;
+  background:  #1C1C21;
+  border-radius:  30px;
+}
+
+.insidePicture{
+  width: 112px;
+  z-index: 1;
+}
+.dim{
+  content: "";
+  background: #1C1C21;
+  border-radius: 30px;
+  opacity: 0.6;
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

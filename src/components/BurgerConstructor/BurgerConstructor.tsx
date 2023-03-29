@@ -30,7 +30,8 @@ const BurgerConstructor:React.FC<TBurgerConstructorProps> =({closeModalCallback}
   });
   const createOrderList = () => {
     const CurrentBun = bunsMenu[orderBun - 1]._id;
-    return [CurrentBun, ...orderIngredients.map((ingredient) => { return ingredientsMenu[ingredient.ingredientType]._id }), CurrentBun]
+    return [CurrentBun, ...orderIngredients.map((ingredient) => { return ingredientsMenu[ingredient.ingredientType]._id })//, CurrentBun
+  ]
   }
   return (<>
     <section className={`${styles.BurgerConstructor} ml-5 mr-5 pt-25`} ref={dropConstructor}>

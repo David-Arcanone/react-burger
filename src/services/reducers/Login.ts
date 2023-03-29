@@ -55,6 +55,7 @@ export const loginReducer = (state = initialState, action: TLoginActions):ILogin
       };
     }
     case LOGIN_REQUEST_SUCCES: {
+      //console.log(`${action.newAccesToken.slice(7)}`);
       setCookie("accessTokenBurger", action.newAccesToken, { expires: 1200 });
       window.localStorage.setItem("refreshTokenBurger", action.newRefreshToken);
       setCookie("isLoggedIn", "Logged", {});
