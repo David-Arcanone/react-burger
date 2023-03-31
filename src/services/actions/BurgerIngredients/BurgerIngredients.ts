@@ -16,12 +16,12 @@ import { InitConstructorLibrary, refreshPrice } from '../BurgerConstructor/Burge
 
 export interface IChangeBuns {
     readonly type: typeof CHANGE_BUNS;
-    readonly _id: number;
+    readonly num: number;
 }
 
 export interface IIncreaseIngredientAmount {
     readonly type: typeof INCREASE_INGREDIENT_AMOUNT;
-    readonly _id: number;
+    readonly num: number;
 }
 
 export interface IDownloadIngredientsRequest {
@@ -110,13 +110,13 @@ export function cleanSelectedIngredients(): ICleanSelectedIngredients {
 export function changeBuns(menuIndex: number): IChangeBuns {
     return {
         type: CHANGE_BUNS,
-        _id: menuIndex
+        num: menuIndex
     };
 }
 
 export function increaseIngredientAmount(menuIndex: number): IIncreaseIngredientAmount {
     return {
         type: INCREASE_INGREDIENT_AMOUNT,
-        _id: menuIndex
+        num: menuIndex
     };
 } 

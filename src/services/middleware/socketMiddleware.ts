@@ -27,6 +27,7 @@ export const socketMiddleware = (wsUrl:string, wsActions:TWSActions, isProtected
             dispatch({ type: onOpen, payload: event });
           };
           socket.onerror = event => {
+            
             dispatch({ type: onError, payload: event });
           };
           socket.onmessage = event => {

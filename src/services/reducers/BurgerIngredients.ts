@@ -43,7 +43,7 @@ export const burgerIngredientsReducer = (state = initialState, action: TBurgerIn
       return {
         ...state,
         ingredients: [...state.ingredients].map((foodItem,foodIndex) =>
-        foodIndex === action._id ? { ...foodItem, qty: ++foodItem.qty} : foodItem
+        foodIndex === action.num ? { ...foodItem, qty: ++foodItem.qty} : foodItem
         )
       };
     }
@@ -59,7 +59,7 @@ export const burgerIngredientsReducer = (state = initialState, action: TBurgerIn
       return {
         ...state,
         buns: [...state.buns].map((foodItem,foodIndex) =>
-        foodIndex === action._id ? { ...foodItem, qty: 2} : {...foodItem, qty: 0}//можно 1 если надо
+        foodIndex === action.num ? { ...foodItem, qty: 2} : {...foodItem, qty: 0}//можно 1 если надо
         )
       };
     }
