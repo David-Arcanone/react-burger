@@ -66,7 +66,6 @@ export const App:FunctionComponent =()=> {
               {/*Защищенная страница*/}
               <Route path="/profile" element={<ProtectedPage><Profile /></ProtectedPage>} />
               <Route path="/profile/orders" element={<ProtectedPage><ProfileOrders closeModal={closeModalFunction}/></ProtectedPage>} />
-              
               <Route path="/profile/orders/:id" element={<ProtectedPage> <ProfileOrdersID/> </ProtectedPage>} />
               {/*<Route path="/profile/*" element={<ProtectedPage><NotFound /></ProtectedPage>} />*/}
               {/*Страницы авторизации*/}
