@@ -2,7 +2,7 @@ import { TResetPasswordActions } from "../actions/ResetPassword/ResetPassword";
 import { CHANGE_CURRENT_RESET_INPUT_CODE, CHANGE_CURRENT_RESET_INPUT_EMAIL, CHANGE_CURRENT_RESET_INPUT_PASSWORD, CLEAR_CURRENT_RESET_INPUTS_PAGE1_FORGOT_PASSWORD, CLEAR_CURRENT_RESET_INPUTS_PAGE2_RESET_PASSWORD, FORGOT_PASSWORD_REQUEST_FAIL, FORGOT_PASSWORD_REQUEST_START, FORGOT_PASSWORD_REQUEST_SUCCES, HIDE_CURRENT_RESET_INPUT_PASSWORD, RESET_PASSWORD_REQUEST_FAIL, RESET_PASSWORD_REQUEST_START, RESET_PASSWORD_REQUEST_SUCCES, SHOW_CURRENT_RESET_INPUT_PASSWORD } from "../constants/ResetPassword/ResetPassword";
 import { IResetPasswordState } from "../types/Reset/Reset";
 
-const initialState: IResetPasswordState = {
+export const initialState: IResetPasswordState = {
     inputsPage1ForgotPassword: {
         email: "",
     },

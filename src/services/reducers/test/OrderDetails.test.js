@@ -1,15 +1,16 @@
-import { orderDetailsReducer as reducer } from '../OrderDetails.ts';
+import { orderDetailsReducer as reducer, initialState } from '../OrderDetails.ts';
 import * as types from '../../constants/OrderDetails/OrderDetails';
+const testInitialState = {
+    orderRequest: false,
+    orderRequestFailed: false,
+    orderNumber: "111",
+    orderName: "222",
+    unResponded: true,
+}
 
 describe('orderDetails reducer', () => {
     it('should return the initial state', () => {
-        expect(reducer(undefined, {})).toEqual({
-            orderRequest: false,
-            orderRequestFailed: false,
-            orderNumber: "загрузка",
-            orderName: "",
-            unResponded: false,
-        })
+        expect(reducer(undefined, {})).toEqual(initialState)
     })
 
     it('LOAD_ORDER_REQUEST', () => {
@@ -19,33 +20,23 @@ describe('orderDetails reducer', () => {
             })
         ).toEqual(
             {
-                orderRequest: true,
-                orderRequestFailed: false,
+                ...initialState,
                 orderNumber: "загрузка",
                 orderName: "",
-                unResponded: false,
+                orderRequest: true
             }
         )
 
         expect(
             reducer(
-                {
-                    orderRequest: false,
-                    orderRequestFailed: false,
-                    orderNumber: "sdsdsdsd",
-                    orderName: "sdsdsdsdsdsd",
-                    unResponded: true,
-                },
+                testInitialState,
                 {
                     type: types.LOAD_ORDER_REQUEST,
                 }
             )
         ).toEqual({
+            ...testInitialState,
             orderRequest: true,
-            orderRequestFailed: false,
-            orderNumber: "sdsdsdsd",
-            orderName: "sdsdsdsdsdsd",
-            unResponded: true,
         })
     })
 
@@ -56,33 +47,21 @@ describe('orderDetails reducer', () => {
             })
         ).toEqual(
             {
-                orderRequest: false,
-                orderRequestFailed: true,
-                orderNumber: "загрузка",
-                orderName: "",
-                unResponded: false,
+                ...initialState,
+                orderRequestFailed: true
             }
         )
 
         expect(
             reducer(
-                {
-                    orderRequest: true,
-                    orderRequestFailed: false,
-                    orderNumber: "22",
-                    orderName: "22",
-                    unResponded: false,
-                },
+                testInitialState,
                 {
                     type: types.LOAD_ORDER_REQUEST_FAILED,
                 }
             )
         ).toEqual({
-            orderRequest: false,
+            ...testInitialState,
             orderRequestFailed: true,
-            orderNumber: "22",
-            orderName: "22",
-            unResponded: false,
         })
     })
 
@@ -95,22 +74,18 @@ describe('orderDetails reducer', () => {
             })
         ).toEqual(
             {
-                orderRequest: false,
-                orderRequestFailed: false,
+                ...initialState,
                 orderNumber: "555",
                 orderName: "Бургер Солнца",
-                unResponded: false,
             }
         )
 
         expect(
             reducer(
                 {
+                    ...testInitialState,
                     orderRequest: true,
                     orderRequestFailed: true,
-                    orderNumber: "загрузка",
-                    orderName: "---",
-                    unResponded: false,
                 },
                 {
                     type: types.LOAD_ORDER_REQUEST_SUCCES,
@@ -119,11 +94,9 @@ describe('orderDetails reducer', () => {
                 }
             )
         ).toEqual({
-            orderRequest: false,
-            orderRequestFailed: false,
+            ...testInitialState,
             orderNumber: "555",
             orderName: "Бургер Солнца",
-            unResponded: false,
         })
     })
 
@@ -134,32 +107,20 @@ describe('orderDetails reducer', () => {
             })
         ).toEqual(
             {
-                orderRequest: false,
-                orderRequestFailed: false,
-                orderNumber: "загрузка",
-                orderName: "",
+                ...initialState,
                 unResponded: true,
             }
         )
 
         expect(
             reducer(
-                {
-                    orderRequest: true,
-                    orderRequestFailed: false,
-                    orderNumber: "444",
-                    orderName: "Лунный сэндвич",
-                    unResponded: false,
-                },
+                testInitialState,
                 {
                     type: types.SUSPEND_ORDER,
                 }
             )
         ).toEqual({
-            orderRequest: true,
-            orderRequestFailed: false,
-            orderNumber: "444",
-            orderName: "Лунный сэндвич",
+            ...testInitialState,
             unResponded: true,
         })
     })
@@ -169,35 +130,15 @@ describe('orderDetails reducer', () => {
             reducer(undefined, {
                 type: types.CLEAR_ORDER
             })
-        ).toEqual(
-            {
-                orderRequest: false,
-                orderRequestFailed: false,
-                orderNumber: "загрузка",
-                orderName: "",
-                unResponded: false,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
             reducer(
-                {
-                    orderRequest: true,
-                    orderRequestFailed: true,
-                    orderNumber: "Бяка",
-                    orderName: "333",
-                    unResponded: true,
-                },
+                testInitialState,
                 {
                     type: types.CLEAR_ORDER,
                 }
             )
-        ).toEqual({
-            orderRequest: false,
-            orderRequestFailed: false,
-            orderNumber: "загрузка",
-            orderName: "",
-            unResponded: false,
-        })
+        ).toEqual(initialState)
     })
 })

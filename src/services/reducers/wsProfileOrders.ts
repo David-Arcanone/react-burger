@@ -3,7 +3,7 @@ import { TWsState } from "../types/websocket/websocket";
 import {TWsProfileOrdersActions} from "../actions/wsProfileOrders/wsProfileOrders"
 import { WS_PROFILE_ORDERS_CONNECTION_CLOSED, WS_PROFILE_ORDERS_CONNECTION_ERROR, WS_PROFILE_ORDERS_CONNECTION_SUCCESS, WS_PROFILE_ORDERS_GET_LIST } from "../constants/wsProfileOrders/wsProfileOrders";
 
-const initialState:TWsState  = {
+export const initialState:TWsState  = {
     wsConnection: false,
     ordersList: [],
     total: 0,
@@ -35,7 +35,6 @@ export const wsProfileOrdersReducer = (state = initialState, action:TWsProfileOr
             };
         }
         case WS_PROFILE_ORDERS_GET_LIST: {
-            console.log(action)
             return {
                 ...state,
                 error: undefined,

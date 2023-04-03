@@ -1,12 +1,10 @@
-import { modalReducer as reducer } from '../Modal.ts';
+import { modalReducer as reducer,initialState } from '../Modal.ts';
 import * as types from '../../constants/Modal/Modal';
 
 
 describe('modalReducer reducer', () => {
     it('should return the initial state', () => {
-        expect(reducer(undefined, {})).toEqual({
-            modalData: ""
-        })
+        expect(reducer(undefined, {})).toEqual(initialState)
     })
 
     it('OPEN_INGREDIENT_FOCUS', () => {

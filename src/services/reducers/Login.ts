@@ -2,7 +2,7 @@ import { TLoginActions } from "../actions/Login/Login";
 import { AUTH_CHECKED, CHANGE_CURRENT_LOGIN_INPUT_EMAIL, CHANGE_CURRENT_LOGIN_INPUT_PASSWORD, CLEAR_CURRENT_LOGIN_INPUTS, HIDE_CURRENT_LOGIN_INPUT_PASSWORD, TRACK_LOGIN, LOGIN_REQUEST, LOGIN_REQUEST_ERROR, LOGIN_REQUEST_SUCCES, LOGOUT_REQUEST, LOGOUT_REQUEST_ERROR, LOGOUT_REQUEST_SUCCES, SHOW_CURRENT_LOGIN_INPUT_PASSWORD, LOGIN_RELOGIN } from "../constants/Login/Login";
 import { ILoginState } from "../types/Login/Login";
 
-const initialState:ILoginState = {
+export const initialState:ILoginState = {
   inputs: {
     email: "",
     password: "",

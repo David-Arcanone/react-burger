@@ -4,7 +4,7 @@ import { ADD_INGREDIENT_TO_CONSTRUCTOR, CHANGE_ORDER_BUN, CLEAN_CONSTRUCTOR, DEL
 import { IBurgerConstructorState } from "../types/BurgerConstructor/BurgerConstructor";
 
 
-const initialState: IBurgerConstructorState = {
+export const initialState: IBurgerConstructorState = {
   bunsMenu: [],
   ingredientsMenu: [],
   orderBun: 0, // индексы булочек сдвигаю на +1, 0 будет когда булок нет.

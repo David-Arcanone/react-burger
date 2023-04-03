@@ -1,459 +1,231 @@
-import { loginReducer as reducer } from '../Login.ts';
+import { loginReducer as reducer, initialState } from '../Login.ts';
 import * as types from '../../constants/Login/Login';
+
+const testInitialState = {
+    inputs: {
+        email: "1@1.ru",
+        password: "1111",
+    },
+    isLoading: false,
+    isExiting: false,
+    isPasswordHidden: false,
+    loginStateChange: false,
+    isLogged: true,
+    isAuthChecked: true,
+};
 
 describe('login reducer', () => {
     it('should return the initial state', () => {
-        expect(reducer(undefined, {})).toEqual({
-            inputs: {
-                email: "",
-                password: "",
-            },
-            isLoading: false,
-            isExiting: false,
-            isPasswordHidden: true,
-            loginStateChange: false,
-            isLogged: false,
-            isAuthChecked: false,
-        })
+        expect(reducer(undefined, {})).toEqual(initialState)
     })
 
     it('LOGOUT_REQUEST', () => {
-        //не удаляет несуществующее
         expect(
             reducer(undefined, {
                 type: types.LOGOUT_REQUEST,
             })
         ).toEqual(
             {
-                inputs: {
-                    email: "",
-                    password: "",
-                },
-                isLoading: false,
-                isExiting: true,
-                isPasswordHidden: true,
-                loginStateChange: false,
-                isLogged: false,
-                isAuthChecked: false,
-
+                ...initialState,
+                isExiting: true
             }
         )
 
         expect(
             reducer(
-                {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1111",
-                    },
-                    isLoading: false,
-                    isExiting: false,
-                    isPasswordHidden: false,
-                    loginStateChange: false,
-                    isLogged: true,
-                    isAuthChecked: true,
-
-                },
+                testInitialState,
                 {
                     type: types.LOGOUT_REQUEST,
                 }
             )
         ).toEqual({
-            inputs: {
-                email: "1@1.ru",
-                password: "1111",
-            },
-            isLoading: false,
+            ...testInitialState,
             isExiting: true,
-            isPasswordHidden: false,
-            loginStateChange: false,
-            isLogged: true,
-            isAuthChecked: true,
-
         })
     })
 
     it('LOGOUT_REQUEST_SUCCES', () => {
-        //не удаляет несуществующее
         expect(
             reducer(undefined, {
                 type: types.LOGOUT_REQUEST_SUCCES,
             })
         ).toEqual(
             {
-                inputs: {
-                    email: "",
-                    password: "",
-                },
-                isLoading: false,
-                isPasswordHidden: true,
-                isLogged: false,
-                isAuthChecked: false,
-                isExiting: false,
+                ...initialState,
                 loginStateChange: true,
-
             }
         )
 
         expect(
             reducer(
                 {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1111",
-                    },
-                    isLoading: false,
+                    ...testInitialState,
                     isExiting: true,
-                    isPasswordHidden: false,
-                    loginStateChange: true,
-                    isLogged: false,
-                    isAuthChecked: true,
                 },
                 {
                     type: types.LOGOUT_REQUEST_SUCCES,
                 }
             )
         ).toEqual({
-            inputs: {
-                email: "1@1.ru",
-                password: "1111",
-            },
-            isLoading: false,
-            isExiting: false,
-            isPasswordHidden: false,
+            ...testInitialState,
             loginStateChange: true,
             isLogged: false,
-            isAuthChecked: true,
         })
     })
 
     it('LOGOUT_REQUEST_ERROR', () => {
-        //не удаляет несуществующее
         expect(
             reducer(undefined, {
                 type: types.LOGOUT_REQUEST_ERROR,
             })
         ).toEqual(
             {
-                inputs: {
-                    email: "",
-                    password: "",
-                },
-                isLoading: false,
-                isPasswordHidden: true,
-                isLogged: false,
-                isAuthChecked: false,
-                isExiting: false,
+                ...initialState,
                 loginStateChange: true,
-
             }
         )
 
         expect(
             reducer(
                 {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1111",
-                    },
-                    isLoading: false,
+                    ...testInitialState,
                     isExiting: true,
-                    isPasswordHidden: false,
-                    loginStateChange: true,
-                    isLogged: false,
-                    isAuthChecked: true,
                 },
                 {
                     type: types.LOGOUT_REQUEST_ERROR,
                 }
             )
         ).toEqual({
-            inputs: {
-                email: "1@1.ru",
-                password: "1111",
-            },
-            isLoading: false,
-            isExiting: false,
-            isPasswordHidden: false,
+            ...testInitialState,
             loginStateChange: true,
             isLogged: false,
-            isAuthChecked: true,
         })
     })
 
     it('LOGIN_RELOGIN', () => {
-        //не удаляет несуществующее
         expect(
             reducer(undefined, {
                 type: types.LOGIN_RELOGIN,
             })
         ).toEqual(
             {
-                inputs: {
-                    email: "",
-                    password: "",
-                },
-                isLoading: false,
-                isExiting: false,
-                isPasswordHidden: true,
-                loginStateChange: false,
+                ...initialState,
                 isLogged: true,
-                isAuthChecked: false,
-
             }
         )
 
         expect(
             reducer(
                 {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1111",
-                    },
-                    isLoading: false,
-                    isExiting: false,
-                    isPasswordHidden: false,
-                    loginStateChange: false,
+                    ...testInitialState,
                     isLogged: false,
-                    isAuthChecked: true,
-
                 },
                 {
                     type: types.LOGIN_RELOGIN,
                 }
             )
-        ).toEqual({
-
-            inputs: {
-                email: "1@1.ru",
-                password: "1111",
-            },
-            isLoading: false,
-            isExiting: false,
-            isPasswordHidden: false,
-            loginStateChange: false,
-            isLogged: true,
-            isAuthChecked: true,
-
-        })
+        ).toEqual(testInitialState)
     })
 
     it('LOGIN_REQUEST', () => {
-        //не удаляет несуществующее
         expect(
             reducer(undefined, {
                 type: types.LOGIN_REQUEST,
             })
         ).toEqual(
             {
-                inputs: {
-                    email: "",
-                    password: "",
-                },
+                ...initialState,
                 isLoading: true,
-                isExiting: false,
-                isPasswordHidden: true,
-                loginStateChange: false,
-                isLogged: false,
-                isAuthChecked: false,
             }
         )
 
         expect(
-            reducer(
-                {
-                    inputs: {
-                        email: "11@mail.ru",
-                        password: "11@mail.ru",
-                    },
-                    isLoading: false,
-                    isExiting: false,
-                    isPasswordHidden: false,
-                    loginStateChange: false,
-                    isLogged: false,
-                    isAuthChecked: false,
-                },
+            reducer(testInitialState,
                 {
                     type: types.LOGIN_REQUEST,
                 }
             )
         ).toEqual({
-            inputs: {
-                email: "11@mail.ru",
-                password: "11@mail.ru",
-            },
+            ...testInitialState,
             isLoading: true,
-            isExiting: false,
-            isPasswordHidden: false,
-            loginStateChange: false,
-            isLogged: false,
-            isAuthChecked: false,
         })
     })
 
     it('LOGIN_REQUEST_ERROR', () => {
-        //не удаляет несуществующее
         expect(
             reducer(undefined, {
                 type: types.LOGIN_REQUEST_ERROR,
             })
-        ).toEqual(
-            {
-                inputs: {
-                    email: "",
-                    password: "",
-                },
-                isLoading: false,
-                isExiting: false,
-                isPasswordHidden: true,
-                loginStateChange: false,
-                isLogged: false,
-                isAuthChecked: false,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
             reducer(
                 {
-                    inputs: {
-                        email: "11@mail.ru",
-                        password: "11@mail.ru",
-                    },
+                    ...testInitialState,
                     isLoading: true,
-                    isExiting: false,
-                    isPasswordHidden: false,
-                    loginStateChange: false,
-                    isLogged: false,
-                    isAuthChecked: false,
                 },
                 {
                     type: types.LOGIN_REQUEST_ERROR,
                 }
             )
-        ).toEqual({
-            inputs: {
-                email: "11@mail.ru",
-                password: "11@mail.ru",
-            },
-            isLoading: false,
-            isExiting: false,
-            isPasswordHidden: false,
-            loginStateChange: false,
-            isLogged: false,
-            isAuthChecked: false,
-        })
+        ).toEqual(testInitialState)
     })
 
     it('LOGIN_REQUEST_SUCCES', () => {
-        //не удаляет несуществующее
         expect(
             reducer(undefined, {
                 type: types.LOGIN_REQUEST_SUCCES,
             })
         ).toEqual(
             {
-                inputs: {
-                    email: "",
-                    password: "",
-                },
-                isLoading: false,
-                isExiting: false,
-                isPasswordHidden: true,
+                ...initialState,
                 loginStateChange: true,
                 isLogged: true,
-                isAuthChecked: false,
             }
         )
 
         expect(
             reducer(
                 {
-                    inputs: {
-                        email: "11@mail.ru",
-                        password: "11@mail.ru",
-                    },
-                    isLoading: true,
-                    isExiting: false,
-                    isPasswordHidden: false,
-                    loginStateChange: false,
+                    ...testInitialState,
+                    loginStateChange: true,
                     isLogged: false,
-                    isAuthChecked: false,
+                    isLoading: true
                 },
                 {
                     type: types.LOGIN_REQUEST_SUCCES,
                 }
             )
         ).toEqual({
-            inputs: {
-                email: "11@mail.ru",
-                password: "11@mail.ru",
-            },
-            isLoading: false,
-            isExiting: false,
-            isPasswordHidden: false,
+            ...testInitialState,
             loginStateChange: true,
-            isLogged: true,
-            isAuthChecked: false,
         })
     })
 
-
     it('CLEAR_CURRENT_LOGIN_INPUTS', () => {
-        //не удаляет несуществующее
         expect(
             reducer(undefined, {
                 type: types.CLEAR_CURRENT_LOGIN_INPUTS,
             })
-        ).toEqual(
-            {
-                inputs: {
-                    email: "",
-                    password: "",
-                },
-                isLoading: false,
-                isExiting: false,
-                isPasswordHidden: true,
-                loginStateChange: false,
-                isLogged: false,
-                isAuthChecked: false,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
             reducer(
                 {
-                    inputs: {
-                        email: "11@mail.ru",
-                        password: "11@mail.ru",
-                    },
-                    isLoading: false,
-                    isExiting: false,
-                    isPasswordHidden: true,
-                    loginStateChange: true,
-                    isLogged: false,
-                    isAuthChecked: false,
+                    ...testInitialState,
+                    loginStateChange: true
                 },
                 {
                     type: types.CLEAR_CURRENT_LOGIN_INPUTS,
                 }
             )
         ).toEqual({
-            inputs: {
-                email: "",
-                password: "",
-            },
-            isLoading: false,
-            isExiting: false,
-            isPasswordHidden: true,
-            loginStateChange: false,
-            isLogged: false,
-            isAuthChecked: false,
+            ...testInitialState,
+            inputs: initialState.inputs
         })
     })
 
-
     it('CHANGE_CURRENT_LOGIN_INPUT_EMAIL', () => {
-        //не удаляет несуществующее
         expect(
             reducer(undefined, {
                 type: types.CHANGE_CURRENT_LOGIN_INPUT_EMAIL,
@@ -461,55 +233,32 @@ describe('login reducer', () => {
             })
         ).toEqual(
             {
+                ...initialState,
                 inputs: {
                     email: "11@mail.ru",
                     password: "",
                 },
-                isLoading: false,
-                isExiting: false,
-                isPasswordHidden: true,
-                loginStateChange: false,
-                isLogged: false,
-                isAuthChecked: false,
             }
         )
 
         expect(
             reducer(
-                {
-                    inputs: {
-                        email: "11@mail.ru",
-                        password: "11",
-                    },
-                    isLoading: false,
-                    isExiting: false,
-                    isPasswordHidden: true,
-                    loginStateChange: false,
-                    isLogged: false,
-                    isAuthChecked: false,
-                },
+                testInitialState,
                 {
                     type: types.CHANGE_CURRENT_LOGIN_INPUT_EMAIL,
                     newEmail: "22@mail.ru"
                 }
             )
         ).toEqual({
+            ...testInitialState,
             inputs: {
                 email: "22@mail.ru",
-                password: "11",
+                password: testInitialState.inputs.password,
             },
-            isLoading: false,
-            isExiting: false,
-            isPasswordHidden: true,
-            loginStateChange: false,
-            isLogged: false,
-            isAuthChecked: false,
         })
     })
 
-
     it('CHANGE_CURRENT_LOGIN_INPUT_PASSWORD', () => {
-        //не удаляет несуществующее
         expect(
             reducer(undefined, {
                 type: types.CHANGE_CURRENT_LOGIN_INPUT_PASSWORD,
@@ -517,230 +266,104 @@ describe('login reducer', () => {
             })
         ).toEqual(
             {
+                ...initialState,
                 inputs: {
                     email: "",
                     password: "11",
                 },
-                isLoading: false,
-                isExiting: false,
-                isPasswordHidden: true,
-                loginStateChange: false,
-                isLogged: false,
-                isAuthChecked: false,
             }
         )
 
         expect(
             reducer(
-                {
-                    inputs: {
-                        email: "11@mail.ru",
-                        password: "11",
-                    },
-                    isLoading: false,
-                    isExiting: false,
-                    isPasswordHidden: true,
-                    loginStateChange: false,
-                    isLogged: false,
-                    isAuthChecked: false,
-                },
+                testInitialState,
                 {
                     type: types.CHANGE_CURRENT_LOGIN_INPUT_PASSWORD,
                     newPassword: "22"
                 }
             )
         ).toEqual({
+            ...testInitialState,
             inputs: {
-                email: "11@mail.ru",
+                email: testInitialState.inputs.email,
                 password: "22",
             },
-            isLoading: false,
-            isExiting: false,
-            isPasswordHidden: true,
-            loginStateChange: false,
-            isLogged: false,
-            isAuthChecked: false,
         })
     })
 
-
-
     it('SHOW_CURRENT_LOGIN_INPUT_PASSWORD', () => {
-        //не удаляет несуществующее
         expect(
             reducer(undefined, {
                 type: types.SHOW_CURRENT_LOGIN_INPUT_PASSWORD,
             })
         ).toEqual(
             {
-                inputs: {
-                    email: "",
-                    password: "",
-                },
-                isLoading: false,
-                isExiting: false,
+                ...initialState,
                 isPasswordHidden: false,
-                loginStateChange: false,
-                isLogged: false,
-                isAuthChecked: false,
             }
         )
 
         expect(
             reducer(
                 {
-                    inputs: {
-                        email: "11@mail.ru",
-                        password: "11",
-                    },
-                    isLoading: false,
-                    isExiting: false,
+                    ...testInitialState,
                     isPasswordHidden: true,
-                    loginStateChange: false,
-                    isLogged: false,
-                    isAuthChecked: false,
                 },
                 {
                     type: types.SHOW_CURRENT_LOGIN_INPUT_PASSWORD,
                 }
             )
-        ).toEqual({
-            inputs: {
-                email: "11@mail.ru",
-                password: "11",
-            },
-            isLoading: false,
-            isExiting: false,
-            isPasswordHidden: false,
-            loginStateChange: false,
-            isLogged: false,
-            isAuthChecked: false,
-        })
+        ).toEqual(testInitialState)
     })
 
     it('HIDE_CURRENT_LOGIN_INPUT_PASSWORD', () => {
-        //не удаляет несуществующее
         expect(
             reducer(undefined, {
                 type: types.HIDE_CURRENT_LOGIN_INPUT_PASSWORD,
             })
-        ).toEqual(
-            {
-                inputs: {
-                    email: "",
-                    password: "",
-                },
-                isLoading: false,
-                isExiting: false,
-                isPasswordHidden: true,
-                loginStateChange: false,
-                isLogged: false,
-                isAuthChecked: false,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
             reducer(
-                {
-                    inputs: {
-                        email: "11@mail.ru",
-                        password: "11",
-                    },
-                    isLoading: false,
-                    isExiting: false,
-                    isPasswordHidden: false,
-                    loginStateChange: false,
-                    isLogged: false,
-                    isAuthChecked: false,
-                },
+                testInitialState,
                 {
                     type: types.HIDE_CURRENT_LOGIN_INPUT_PASSWORD,
                 }
             )
         ).toEqual({
-            inputs: {
-                email: "11@mail.ru",
-                password: "11",
-            },
-            isLoading: false,
-            isExiting: false,
+            ...testInitialState,
             isPasswordHidden: true,
-            loginStateChange: false,
-            isLogged: false,
-            isAuthChecked: false,
         })
     })
 
-    it('HIDE_CURRENT_LOGIN_INPUT_PASSWORD', () => {
-        //не удаляет несуществующее
+    it('TRACK_LOGIN', () => {
         expect(
             reducer(undefined, {
                 type: types.TRACK_LOGIN,
             })
-        ).toEqual(
-            {
-                inputs: {
-                    email: "",
-                    password: "",
-                },
-                isLoading: false,
-                isExiting: false,
-                isPasswordHidden: true,
-                loginStateChange: false,
-                isLogged: false,
-                isAuthChecked: false,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
             reducer(
                 {
-                    inputs: {
-                        email: "11@mail.ru",
-                        password: "11",
-                    },
-                    isLoading: false,
-                    isExiting: false,
-                    isPasswordHidden: true,
+                    ...testInitialState,
                     loginStateChange: true,
-                    isLogged: false,
-                    isAuthChecked: false,
                 },
                 {
                     type: types.TRACK_LOGIN,
                 }
             )
-        ).toEqual({
-            inputs: {
-                email: "11@mail.ru",
-                password: "11",
-            },
-            isLoading: false,
-            isExiting: false,
-            isPasswordHidden: true,
-            loginStateChange: false,
-            isLogged: false,
-            isAuthChecked: false,
-        })
+        ).toEqual(testInitialState)
     })
 
-    it('HIDE_CURRENT_LOGIN_INPUT_PASSWORD', () => {
-        //не удаляет несуществующее
+    it('AUTH_CHECKED', () => {
         expect(
             reducer(undefined, {
                 type: types.AUTH_CHECKED,
             })
         ).toEqual(
             {
-                inputs: {
-                    email: "",
-                    password: "",
-                },
-                isLoading: false,
-                isExiting: false,
-                isPasswordHidden: true,
-                loginStateChange: false,
-                isLogged: false,
+                ...initialState,
                 isAuthChecked: true,
             }
         )
@@ -748,32 +371,13 @@ describe('login reducer', () => {
         expect(
             reducer(
                 {
-                    inputs: {
-                        email: "11@mail.ru",
-                        password: "11",
-                    },
-                    isLoading: false,
-                    isExiting: false,
-                    isPasswordHidden: true,
-                    loginStateChange: false,
-                    isLogged: false,
+                    ...testInitialState,
                     isAuthChecked: false,
                 },
                 {
                     type: types.AUTH_CHECKED,
                 }
             )
-        ).toEqual({
-            inputs: {
-                email: "11@mail.ru",
-                password: "11",
-            },
-            isLoading: false,
-            isExiting: false,
-            isPasswordHidden: true,
-            loginStateChange: false,
-            isLogged: false,
-            isAuthChecked: true,
-        })
+        ).toEqual(testInitialState)
     })
 })

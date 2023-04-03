@@ -3,7 +3,7 @@ import { CHANGE_BUNS, CLEAN_SELECTED_INGREDIENTS, DECREASE_INGREDIENT_AMOUNT, DO
 import { IBurgerIngredientsState } from "../types/BurgerIngredients/BurgerIngredients";
 
 
-const initialState:IBurgerIngredientsState = {
+export const initialState:IBurgerIngredientsState = {
   ingredients: [],
   buns: [],
   ingredientRequest: false,

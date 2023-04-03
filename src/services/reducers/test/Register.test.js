@@ -1,17 +1,18 @@
-import { registerReducer as reducer } from '../Register.ts';
+import { registerReducer as reducer, initialState } from '../Register.ts';
 import * as types from '../../constants/Register/Register';
+const testInitialState = {
+    inputs: {
+        email: "1@1.ru",
+        password: "пароль1",
+        name: "имя1",
+    },
+    isRequesting: false,
+    isPasswordHidden: false,
+}
 
 describe('register reducer', () => {
     it('should return the initial state', () => {
-        expect(reducer(undefined, {})).toEqual({
-            inputs: {
-                email: "",
-                password: "",
-                name: "",
-            },
-            isRequesting: false,
-            isPasswordHidden: true,
-        })
+        expect(reducer(undefined, {})).toEqual(initialState)
     })
 
     it('REGISTER_REQUEST_START', () => {
@@ -21,39 +22,20 @@ describe('register reducer', () => {
             })
         ).toEqual(
             {
-                inputs: {
-                    email: "",
-                    password: "",
-                    name: "",
-                },
+                ...initialState,
                 isRequesting: true,
-                isPasswordHidden: true,
             }
         )
 
         expect(
-            reducer(
-                {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1",
-                        name: "11",
-                    },
-                    isRequesting: false,
-                    isPasswordHidden: false,
-                },
+            reducer(testInitialState,
                 {
                     type: types.REGISTER_REQUEST_START,
                 }
             )
         ).toEqual({
-            inputs: {
-                email: "1@1.ru",
-                password: "1",
-                name: "11",
-            },
+            ...testInitialState,
             isRequesting: true,
-            isPasswordHidden: false,
         })
     })
 
@@ -62,42 +44,19 @@ describe('register reducer', () => {
             reducer(undefined, {
                 type: types.REGISTER_REQUEST_FAILED
             })
-        ).toEqual(
-            {
-                inputs: {
-                    email: "",
-                    password: "",
-                    name: "",
-                },
-                isRequesting: false,
-                isPasswordHidden: true,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
             reducer(
                 {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1",
-                        name: "11",
-                    },
+                    ...testInitialState,
                     isRequesting: true,
-                    isPasswordHidden: true,
                 },
                 {
                     type: types.REGISTER_REQUEST_FAILED,
                 }
             )
-        ).toEqual({
-            inputs: {
-                email: "1@1.ru",
-                password: "1",
-                name: "11",
-            },
-            isRequesting: false,
-            isPasswordHidden: true,
-        })
+        ).toEqual(testInitialState)
     })
 
     it('REGISTER_REQUEST_SUCCES', () => {
@@ -105,41 +64,25 @@ describe('register reducer', () => {
             reducer(undefined, {
                 type: types.REGISTER_REQUEST_SUCCES
             })
-        ).toEqual(
-            {
-                inputs: {
-                    email: "",
-                    password: "",
-                    name: "",
-                },
-                isRequesting: false,
-                isPasswordHidden: true,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
             reducer(
                 {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1",
-                        name: "11",
-                    },
+                    ...testInitialState,
                     isRequesting: true,
-                    isPasswordHidden: true,
                 },
                 {
                     type: types.REGISTER_REQUEST_SUCCES,
                 }
             )
         ).toEqual({
+            ...testInitialState,
             inputs: {
                 email: "",
                 password: "",
                 name: "",
             },
-            isRequesting: false,
-            isPasswordHidden: true,
         })
     })
 
@@ -148,41 +91,21 @@ describe('register reducer', () => {
             reducer(undefined, {
                 type: types.CLEAR_CURRENT_REGISTER_INPUTS
             })
-        ).toEqual(
-            {
-                inputs: {
-                    email: "",
-                    password: "",
-                    name: "",
-                },
-                isRequesting: false,
-                isPasswordHidden: true,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
-            reducer(
-                {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1",
-                        name: "11",
-                    },
-                    isRequesting: true,
-                    isPasswordHidden: false,
-                },
+            reducer(testInitialState,
                 {
                     type: types.CLEAR_CURRENT_REGISTER_INPUTS,
                 }
             )
         ).toEqual({
+            ...testInitialState,
             inputs: {
                 email: "",
                 password: "",
                 name: "",
             },
-            isRequesting: true,
-            isPasswordHidden: false,
         })
     })
 
@@ -193,12 +116,7 @@ describe('register reducer', () => {
             })
         ).toEqual(
             {
-                inputs: {
-                    email: "",
-                    password: "",
-                    name: "",
-                },
-                isRequesting: false,
+                ...initialState,
                 isPasswordHidden: false,
             }
         )
@@ -206,27 +124,14 @@ describe('register reducer', () => {
         expect(
             reducer(
                 {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1",
-                        name: "11",
-                    },
-                    isRequesting: true,
+                    ...testInitialState,
                     isPasswordHidden: true,
                 },
                 {
                     type: types.SHOW_CURRENT_REGISTER_INPUT_PASSWORD,
                 }
             )
-        ).toEqual({
-            inputs: {
-                email: "1@1.ru",
-                password: "1",
-                name: "11",
-            },
-            isRequesting: true,
-            isPasswordHidden: false,
-        })
+        ).toEqual(testInitialState)
     })
 
     it('HIDE_CURRENT_REGISTER_INPUT_PASSWORD', () => {
@@ -234,40 +139,16 @@ describe('register reducer', () => {
             reducer(undefined, {
                 type: types.HIDE_CURRENT_REGISTER_INPUT_PASSWORD
             })
-        ).toEqual(
-            {
-                inputs: {
-                    email: "",
-                    password: "",
-                    name: "",
-                },
-                isRequesting: false,
-                isPasswordHidden: true,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
-            reducer(
-                {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1",
-                        name: "11",
-                    },
-                    isRequesting: true,
-                    isPasswordHidden: false,
-                },
+            reducer(testInitialState,
                 {
                     type: types.HIDE_CURRENT_REGISTER_INPUT_PASSWORD,
                 }
             )
         ).toEqual({
-            inputs: {
-                email: "1@1.ru",
-                password: "1",
-                name: "11",
-            },
-            isRequesting: true,
+            ...testInitialState,
             isPasswordHidden: true,
         })
     })
@@ -280,40 +161,29 @@ describe('register reducer', () => {
             })
         ).toEqual(
             {
+                ...initialState,
                 inputs: {
                     email: "",
                     password: "",
                     name: "1",
                 },
-                isRequesting: false,
-                isPasswordHidden: true,
             }
         )
 
         expect(
-            reducer(
-                {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1",
-                        name: "11",
-                    },
-                    isRequesting: true,
-                    isPasswordHidden: false,
-                },
+            reducer(testInitialState,
                 {
                     type: types.CHANGE_CURRENT_REGISTER_INPUT_NAME,
                     newName: "22"
                 }
             )
         ).toEqual({
+            ...testInitialState,
             inputs: {
-                email: "1@1.ru",
-                password: "1",
+                email: testInitialState.inputs.email,
+                password: testInitialState.inputs.password,
                 name: "22",
             },
-            isRequesting: true,
-            isPasswordHidden: false,
         })
     })
 
@@ -325,40 +195,29 @@ describe('register reducer', () => {
             })
         ).toEqual(
             {
+                ...initialState,
                 inputs: {
                     email: "",
                     password: "1",
                     name: "",
                 },
-                isRequesting: false,
-                isPasswordHidden: true,
             }
         )
 
         expect(
-            reducer(
-                {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1",
-                        name: "11",
-                    },
-                    isRequesting: true,
-                    isPasswordHidden: false,
-                },
+            reducer(testInitialState,
                 {
                     type: types.CHANGE_CURRENT_REGISTER_INPUT_PASSWORD,
                     newPassword: "2"
                 }
             )
         ).toEqual({
+            ...testInitialState,
             inputs: {
-                email: "1@1.ru",
+                email: testInitialState.inputs.email,
                 password: "2",
-                name: "11",
+                name: testInitialState.inputs.name,
             },
-            isRequesting: true,
-            isPasswordHidden: false,
         })
     })
 
@@ -370,40 +229,29 @@ describe('register reducer', () => {
             })
         ).toEqual(
             {
+                ...initialState,
                 inputs: {
                     email: "1@1.ru",
                     password: "",
                     name: "",
                 },
-                isRequesting: false,
-                isPasswordHidden: true,
             }
         )
 
         expect(
-            reducer(
-                {
-                    inputs: {
-                        email: "1@1.ru",
-                        password: "1",
-                        name: "11",
-                    },
-                    isRequesting: true,
-                    isPasswordHidden: false,
-                },
+            reducer(testInitialState,
                 {
                     type: types.CHANGE_CURRENT_REGISTER_INPUT_EMAIL,
                     newEmail: "2@2.ru"
                 }
             )
         ).toEqual({
+            ...testInitialState,
             inputs: {
                 email: "2@2.ru",
-                password: "1",
-                name: "11",
+                password: testInitialState.inputs.password,
+                name: testInitialState.inputs.name,
             },
-            isRequesting: true,
-            isPasswordHidden: false,
         })
     })
 })

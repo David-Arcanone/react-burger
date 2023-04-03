@@ -5,7 +5,7 @@ import { WS_FEED_CONNECTION_CLOSED,
     WS_FEED_GET_LIST } from "../constants/wsFeed/wsFeed";
 import { TWsState } from "../types/websocket/websocket";
 
-const initialState:TWsState  = {
+export const initialState:TWsState  = {
     wsConnection: false,
     ordersList: [],
     total: 0,
@@ -37,8 +37,6 @@ export const wsFeedReducer = (state = initialState, action:TWsFeedActions):TWsSt
             };
         }
         case WS_FEED_GET_LIST: {
-            console.log(action.payload);
-
             return {
                 ...state,
                 error: undefined,

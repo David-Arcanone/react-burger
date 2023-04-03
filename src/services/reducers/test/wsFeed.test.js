@@ -1,6 +1,5 @@
-import { wsFeedReducer as reducer } from '../wsFeed.ts';
+import { wsFeedReducer as reducer, initialState } from '../wsFeed.ts';
 import * as types from '../../constants/wsFeed/wsFeed';
-import { error } from 'console';
 const testOrders1 = [
     {
         ingredients: ["1", "2", "3", "2"],
@@ -41,16 +40,17 @@ const testOrders2 = [
         updatedAt: "2023-03-30T10:03:46.688Z"
     }
 ];
+const testInitialState = {
+    wsConnection: true,
+    ordersList: testOrders1,
+    total: 11,
+    totalToday: 1,
+    firstPack: false,
+}
 
 describe('wsFeed Reducer', () => {
     it('should return the initial state', () => {
-        expect(reducer(undefined, {})).toEqual({
-            wsConnection: false,
-            ordersList: [],
-            total: 0,
-            totalToday: 0,
-            firstPack: false
-        })
+        expect(reducer(undefined, {})).toEqual(initialState)
     })
 
     it('WS_FEED_CONNECTION_SUCCESS', () => {
@@ -60,35 +60,23 @@ describe('wsFeed Reducer', () => {
             })
         ).toEqual(
             {
+                ...initialState,
                 wsConnection: true,
-                ordersList: [],
-                total: 0,
-                totalToday: 0,
-                firstPack: false
             }
         )
 
         expect(
             reducer(
                 {
+                    ...testInitialState,
                     wsConnection: false,
-                    ordersList: testOrders1,
-                    total: 11,
-                    totalToday: 1,
-                    firstPack: false,
                     error: { isTrusted: true }
                 },
                 {
                     type: types.WS_FEED_CONNECTION_SUCCESS,
                 }
             )
-        ).toEqual({
-            wsConnection: true,
-            ordersList: testOrders1,
-            total: 11,
-            totalToday: 1,
-            firstPack: false
-        })
+        ).toEqual(testInitialState)
     })
 
     it('WS_FEED_CONNECTION_ERROR', () => {
@@ -99,35 +87,20 @@ describe('wsFeed Reducer', () => {
             })
         ).toEqual(
             {
-                wsConnection: false,
-                ordersList: [],
-                total: 0,
-                totalToday: 0,
-                firstPack: false,
+                ...initialState,
                 error: { isTrusted: true }
             }
         )
 
         expect(
-            reducer(
-                {
-                    wsConnection: true,
-                    ordersList: testOrders1,
-                    total: 11,
-                    totalToday: 1,
-                    firstPack: false
-                },
+            reducer(testInitialState,
                 {
                     type: types.WS_FEED_CONNECTION_ERROR,
                     payload: { isTrusted: true }
                 }
             )
         ).toEqual({
-            wsConnection: false,
-            ordersList: [],
-            total: 0,
-            totalToday: 0,
-            firstPack: false,
+            ...initialState,
             error: { isTrusted: true }
         })
     })
@@ -137,37 +110,15 @@ describe('wsFeed Reducer', () => {
             reducer(undefined, {
                 type: types.WS_FEED_CONNECTION_CLOSED
             })
-        ).toEqual(
-            {
-                wsConnection: false,
-                ordersList: [],
-                total: 0,
-                totalToday: 0,
-                firstPack: false
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
-            reducer(
-                {
-                    wsConnection: true,
-                    ordersList: testOrders1,
-                    total: 11,
-                    totalToday: 1,
-                    firstPack: false,
-                    error: { isTrusted: true }
-                },
+            reducer(testInitialState,
                 {
                     type: types.WS_FEED_CONNECTION_CLOSED,
                 }
             )
-        ).toEqual({
-            wsConnection: false,
-            ordersList: [],
-            total: 0,
-            totalToday: 0,
-            firstPack: false
-        })
+        ).toEqual(initialState)
     })
 
     it('WS_FEED_GET_LIST', () => {
@@ -178,7 +129,7 @@ describe('wsFeed Reducer', () => {
             })
         ).toEqual(
             {
-                wsConnection: false,
+                ...initialState,
                 ordersList: testOrders2,
                 total: 100,
                 totalToday: 20,
@@ -189,11 +140,7 @@ describe('wsFeed Reducer', () => {
         expect(
             reducer(
                 {
-                    wsConnection: true,
-                    ordersList: testOrders1,
-                    total: 11000,
-                    totalToday: 12,
-                    firstPack: false,
+                    ...testInitialState,
                     error: { isTrusted: true }
                 },
                 {
@@ -202,7 +149,7 @@ describe('wsFeed Reducer', () => {
                 }
             )
         ).toEqual({
-            wsConnection: true,
+            ...testInitialState,
             ordersList: testOrders2,
             total: 100,
             totalToday: 20,

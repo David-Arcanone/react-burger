@@ -1,22 +1,23 @@
-import { resetPasswordReducer as reducer } from '../ResetPassword.ts';
+import { resetPasswordReducer as reducer, initialState } from '../ResetPassword.ts';
 import * as types from '../../constants/ResetPassword/ResetPassword';
+const testInitialState ={
+    inputsPage1ForgotPassword: {
+        email: "1@1.ru",
+    },
+    inputsPage2ResetPassword: {
+        password: "пароль1",
+        code: "1212",
+    },
+    isLoadingForgotPassword: false,
+    isLoadingResetPassword: false,
+    isCodeSend: false,
+    isResetSucces: false,
+    isPasswordHidden: true,
+};
 
 describe('resetPassword reducer', () => {
     it('should return the initial state', () => {
-        expect(reducer(undefined, {})).toEqual({
-            inputsPage1ForgotPassword: {
-                email: "",
-            },
-            inputsPage2ResetPassword: {
-                password: "",
-                code: "",
-            },
-            isLoadingForgotPassword: false,
-            isLoadingResetPassword: false,
-            isCodeSend: false,
-            isResetSucces: false,
-            isPasswordHidden: true,
-        })
+        expect(reducer(undefined, {})).toEqual(initialState)
     })
 
     it('FORGOT_PASSWORD_REQUEST_START', () => {
@@ -26,54 +27,21 @@ describe('resetPassword reducer', () => {
             })
         ).toEqual(
             {
-                inputsPage1ForgotPassword: {
-                    email: "",
-                },
-                inputsPage2ResetPassword: {
-                    password: "",
-                    code: "",
-                },
+                ...initialState,
                 isLoadingForgotPassword: true,
-                isLoadingResetPassword: false,
-                isCodeSend: false,
-                isResetSucces: false,
-                isPasswordHidden: true,
             }
         )
 
         expect(
             reducer(
-                {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
-                    isLoadingForgotPassword: false,
-                    isLoadingResetPassword: false,
-                    isCodeSend: false,
-                    isResetSucces: false,
-                    isPasswordHidden: true,
-                },
+                testInitialState,
                 {
                     type: types.FORGOT_PASSWORD_REQUEST_START,
                 }
             )
         ).toEqual({
-            inputsPage1ForgotPassword: {
-                email: "1@1.ru",
-            },
-            inputsPage2ResetPassword: {
-                password: "1",
-                code: "1212",
-            },
+            ...testInitialState,
             isLoadingForgotPassword: true,
-            isLoadingResetPassword: false,
-            isCodeSend: false,
-            isResetSucces: false,
-            isPasswordHidden: true,
         })
     })
 
@@ -82,57 +50,19 @@ describe('resetPassword reducer', () => {
             reducer(undefined, {
                 type: types.FORGOT_PASSWORD_REQUEST_FAIL
             })
-        ).toEqual(
-            {
-                inputsPage1ForgotPassword: {
-                    email: "",
-                },
-                inputsPage2ResetPassword: {
-                    password: "",
-                    code: "",
-                },
-                isLoadingForgotPassword: false,
-                isLoadingResetPassword: false,
-                isCodeSend: false,
-                isResetSucces: false,
-                isPasswordHidden: true,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
             reducer(
                 {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
+                    ...testInitialState,
                     isLoadingForgotPassword: true,
-                    isLoadingResetPassword: false,
-                    isCodeSend: false,
-                    isResetSucces: false,
-                    isPasswordHidden: true,
                 },
                 {
                     type: types.FORGOT_PASSWORD_REQUEST_FAIL,
                 }
             )
-        ).toEqual({
-            inputsPage1ForgotPassword: {
-                email: "1@1.ru",
-            },
-            inputsPage2ResetPassword: {
-                password: "1",
-                code: "1212",
-            },
-            isLoadingForgotPassword: false,
-            isLoadingResetPassword: false,
-            isCodeSend: false,
-            isResetSucces: false,
-            isPasswordHidden: true,
-        })
+        ).toEqual(testInitialState)
     })
 
     it('FORGOT_PASSWORD_REQUEST_SUCCES', () => {
@@ -142,54 +72,25 @@ describe('resetPassword reducer', () => {
             })
         ).toEqual(
             {
-                inputsPage1ForgotPassword: {
-                    email: "",
-                },
-                inputsPage2ResetPassword: {
-                    password: "",
-                    code: "",
-                },
-                isLoadingForgotPassword: false,
-                isLoadingResetPassword: false,
+                ...initialState,
                 isCodeSend: true,
-                isResetSucces: false,
-                isPasswordHidden: true,
             }
         )
 
         expect(
             reducer(
                 {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
+                    ...testInitialState,
                     isLoadingForgotPassword: true,
-                    isLoadingResetPassword: false,
-                    isCodeSend: false,
-                    isResetSucces: false,
-                    isPasswordHidden: true,
                 },
                 {
                     type: types.FORGOT_PASSWORD_REQUEST_SUCCES,
                 }
             )
         ).toEqual({
-            inputsPage1ForgotPassword: {
-                email: "",
-            },
-            inputsPage2ResetPassword: {
-                password: "1",
-                code: "1212",
-            },
-            isLoadingForgotPassword: false,
-            isLoadingResetPassword: false,
-            isCodeSend: true,
-            isResetSucces: false,
-            isPasswordHidden: true,
+            ...testInitialState,
+            isCodeSend:true,
+            inputsPage1ForgotPassword:initialState.inputsPage1ForgotPassword,
         })
     })
 
@@ -200,54 +101,21 @@ describe('resetPassword reducer', () => {
             })
         ).toEqual(
             {
-                inputsPage1ForgotPassword: {
-                    email: "",
-                },
-                inputsPage2ResetPassword: {
-                    password: "",
-                    code: "",
-                },
-                isLoadingForgotPassword: false,
+                ...initialState,
                 isLoadingResetPassword: true,
-                isCodeSend: false,
-                isResetSucces: false,
-                isPasswordHidden: true,
             }
         )
 
         expect(
             reducer(
-                {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
-                    isLoadingForgotPassword: true,
-                    isLoadingResetPassword: false,
-                    isCodeSend: true,
-                    isResetSucces: false,
-                    isPasswordHidden: true,
-                },
+                testInitialState,
                 {
                     type: types.RESET_PASSWORD_REQUEST_START,
                 }
             )
         ).toEqual({
-            inputsPage1ForgotPassword: {
-                email: "1@1.ru",
-            },
-            inputsPage2ResetPassword: {
-                password: "1",
-                code: "1212",
-            },
-            isLoadingForgotPassword: true,
+            ...testInitialState,
             isLoadingResetPassword: true,
-            isCodeSend: true,
-            isResetSucces: false,
-            isPasswordHidden: true,
         })
     })
 
@@ -256,57 +124,19 @@ describe('resetPassword reducer', () => {
             reducer(undefined, {
                 type: types.RESET_PASSWORD_REQUEST_FAIL
             })
-        ).toEqual(
-            {
-                inputsPage1ForgotPassword: {
-                    email: "",
-                },
-                inputsPage2ResetPassword: {
-                    password: "",
-                    code: "",
-                },
-                isLoadingForgotPassword: false,
-                isLoadingResetPassword: false,
-                isCodeSend: false,
-                isResetSucces: false,
-                isPasswordHidden: true,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
             reducer(
                 {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
-                    isLoadingForgotPassword: true,
+                    ...testInitialState,
                     isLoadingResetPassword: true,
-                    isCodeSend: true,
-                    isResetSucces: false,
-                    isPasswordHidden: true,
                 },
                 {
                     type: types.RESET_PASSWORD_REQUEST_FAIL,
                 }
             )
-        ).toEqual({
-            inputsPage1ForgotPassword: {
-                email: "1@1.ru",
-            },
-            inputsPage2ResetPassword: {
-                password: "1",
-                code: "1212",
-            },
-            isLoadingForgotPassword: true,
-            isLoadingResetPassword: false,
-            isCodeSend: true,
-            isResetSucces: false,
-            isPasswordHidden: true,
-        })
+        ).toEqual(testInitialState)
     })
 
     it('RESET_PASSWORD_REQUEST_SUCCES', () => {
@@ -316,54 +146,26 @@ describe('resetPassword reducer', () => {
             })
         ).toEqual(
             {
-                inputsPage1ForgotPassword: {
-                    email: "",
-                },
-                inputsPage2ResetPassword: {
-                    password: "",
-                    code: "",
-                },
-                isLoadingForgotPassword: false,
-                isLoadingResetPassword: false,
-                isCodeSend: false,
+                ...initialState,
                 isResetSucces: true,
-                isPasswordHidden: true,
             }
         )
 
         expect(
             reducer(
                 {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
-                    isLoadingForgotPassword: true,
+                    ...testInitialState,
                     isLoadingResetPassword: true,
                     isCodeSend: true,
-                    isResetSucces: false,
-                    isPasswordHidden: true,
                 },
                 {
                     type: types.RESET_PASSWORD_REQUEST_SUCCES,
                 }
             )
         ).toEqual({
-            inputsPage1ForgotPassword: {
-                email: "1@1.ru",
-            },
-            inputsPage2ResetPassword: {
-                password: "",
-                code: "",
-            },
-            isLoadingForgotPassword: true,
-            isLoadingResetPassword: false,
-            isCodeSend: false,
+            ...testInitialState,
+            inputsPage2ResetPassword: initialState.inputsPage2ResetPassword,
             isResetSucces: true,
-            isPasswordHidden: true,
         })
     })
 
@@ -372,56 +174,20 @@ describe('resetPassword reducer', () => {
             reducer(undefined, {
                 type: types.CLEAR_CURRENT_RESET_INPUTS_PAGE2_RESET_PASSWORD
             })
-        ).toEqual(
-            {
-                inputsPage1ForgotPassword: {
-                    email: "",
-                },
-                inputsPage2ResetPassword: {
-                    password: "",
-                    code: "",
-                },
-                isLoadingForgotPassword: false,
-                isLoadingResetPassword: false,
-                isCodeSend: false,
-                isResetSucces: false,
-                isPasswordHidden: true,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
-            reducer(
-                {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
-                    isLoadingForgotPassword: true,
-                    isLoadingResetPassword: true,
-                    isCodeSend: true,
-                    isResetSucces: false,
-                    isPasswordHidden: true,
-                },
+            reducer(testInitialState,
                 {
                     type: types.CLEAR_CURRENT_RESET_INPUTS_PAGE2_RESET_PASSWORD,
                 }
             )
         ).toEqual({
-            inputsPage1ForgotPassword: {
-                email: "1@1.ru",
-            },
+            ...testInitialState,
             inputsPage2ResetPassword: {
                 password: "",
                 code: "",
             },
-            isLoadingForgotPassword: true,
-            isLoadingResetPassword: true,
-            isCodeSend: true,
-            isResetSucces: false,
-            isPasswordHidden: true,
         })
     })
 
@@ -430,56 +196,19 @@ describe('resetPassword reducer', () => {
             reducer(undefined, {
                 type: types.CLEAR_CURRENT_RESET_INPUTS_PAGE1_FORGOT_PASSWORD
             })
-        ).toEqual(
-            {
-                inputsPage1ForgotPassword: {
-                    email: "",
-                },
-                inputsPage2ResetPassword: {
-                    password: "",
-                    code: "",
-                },
-                isLoadingForgotPassword: false,
-                isLoadingResetPassword: false,
-                isCodeSend: false,
-                isResetSucces: false,
-                isPasswordHidden: true,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
-            reducer(
-                {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
-                    isLoadingForgotPassword: true,
-                    isLoadingResetPassword: true,
-                    isCodeSend: true,
-                    isResetSucces: false,
-                    isPasswordHidden: true,
-                },
+            reducer(testInitialState,
                 {
                     type: types.CLEAR_CURRENT_RESET_INPUTS_PAGE1_FORGOT_PASSWORD,
                 }
             )
         ).toEqual({
+            ...testInitialState,
             inputsPage1ForgotPassword: {
                 email: "",
             },
-            inputsPage2ResetPassword: {
-                password: "1",
-                code: "1212",
-            },
-            isLoadingForgotPassword: true,
-            isLoadingResetPassword: true,
-            isCodeSend: true,
-            isResetSucces: false,
-            isPasswordHidden: true,
         })
     })
 
@@ -491,55 +220,25 @@ describe('resetPassword reducer', () => {
             })
         ).toEqual(
             {
+                ...initialState,
                 inputsPage1ForgotPassword: {
                     email: "2@2.ru",
                 },
-                inputsPage2ResetPassword: {
-                    password: "",
-                    code: "",
-                },
-                isLoadingForgotPassword: false,
-                isLoadingResetPassword: false,
-                isCodeSend: false,
-                isResetSucces: false,
-                isPasswordHidden: true,
             }
         )
 
         expect(
-            reducer(
-                {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
-                    isLoadingForgotPassword: true,
-                    isLoadingResetPassword: true,
-                    isCodeSend: true,
-                    isResetSucces: false,
-                    isPasswordHidden: true,
-                },
+            reducer(testInitialState,
                 {
                     type: types.CHANGE_CURRENT_RESET_INPUT_EMAIL,
                     newEmail: "2@2.ru"
                 }
             )
         ).toEqual({
+            ...testInitialState,
             inputsPage1ForgotPassword: {
                 email: "2@2.ru",
             },
-            inputsPage2ResetPassword: {
-                password: "1",
-                code: "1212",
-            },
-            isLoadingForgotPassword: true,
-            isLoadingResetPassword: true,
-            isCodeSend: true,
-            isResetSucces: false,
-            isPasswordHidden: true,
         })
     })
 
@@ -551,55 +250,27 @@ describe('resetPassword reducer', () => {
             })
         ).toEqual(
             {
-                inputsPage1ForgotPassword: {
-                    email: "",
-                },
+                ...initialState,
                 inputsPage2ResetPassword: {
                     password: "",
                     code: "1",
                 },
-                isLoadingForgotPassword: false,
-                isLoadingResetPassword: false,
-                isCodeSend: false,
-                isResetSucces: false,
-                isPasswordHidden: true,
             }
         )
 
         expect(
-            reducer(
-                {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
-                    isLoadingForgotPassword: true,
-                    isLoadingResetPassword: true,
-                    isCodeSend: true,
-                    isResetSucces: false,
-                    isPasswordHidden: true,
-                },
+            reducer(testInitialState,
                 {
                     type: types.CHANGE_CURRENT_RESET_INPUT_CODE,
                     newCode: "8"
                 }
             )
         ).toEqual({
-            inputsPage1ForgotPassword: {
-                email: "1@1.ru",
-            },
+            ...testInitialState,
             inputsPage2ResetPassword: {
-                password: "1",
+                password: testInitialState.inputsPage2ResetPassword.password,
                 code: "8",
             },
-            isLoadingForgotPassword: true,
-            isLoadingResetPassword: true,
-            isCodeSend: true,
-            isResetSucces: false,
-            isPasswordHidden: true,
         })
     })
 
@@ -611,55 +282,27 @@ describe('resetPassword reducer', () => {
             })
         ).toEqual(
             {
-                inputsPage1ForgotPassword: {
-                    email: "",
-                },
+                ...initialState,
                 inputsPage2ResetPassword: {
                     password: "1",
                     code: "",
                 },
-                isLoadingForgotPassword: false,
-                isLoadingResetPassword: false,
-                isCodeSend: false,
-                isResetSucces: false,
-                isPasswordHidden: true,
             }
         )
 
         expect(
-            reducer(
-                {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
-                    isLoadingForgotPassword: true,
-                    isLoadingResetPassword: true,
-                    isCodeSend: true,
-                    isResetSucces: false,
-                    isPasswordHidden: true,
-                },
+            reducer(testInitialState,
                 {
                     type: types.CHANGE_CURRENT_RESET_INPUT_PASSWORD,
                     newPassword: "8"
                 }
             )
         ).toEqual({
-            inputsPage1ForgotPassword: {
-                email: "1@1.ru",
-            },
+            ...testInitialState,
             inputsPage2ResetPassword: {
                 password: "8",
-                code: "1212",
+                code: testInitialState.inputsPage2ResetPassword.code,
             },
-            isLoadingForgotPassword: true,
-            isLoadingResetPassword: true,
-            isCodeSend: true,
-            isResetSucces: false,
-            isPasswordHidden: true,
         })
     })
 
@@ -668,57 +311,19 @@ describe('resetPassword reducer', () => {
             reducer(undefined, {
                 type: types.HIDE_CURRENT_RESET_INPUT_PASSWORD,
             })
-        ).toEqual(
-            {
-                inputsPage1ForgotPassword: {
-                    email: "",
-                },
-                inputsPage2ResetPassword: {
-                    password: "",
-                    code: "",
-                },
-                isLoadingForgotPassword: false,
-                isLoadingResetPassword: false,
-                isCodeSend: false,
-                isResetSucces: false,
-                isPasswordHidden: true,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
             reducer(
                 {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
-                    isLoadingForgotPassword: true,
-                    isLoadingResetPassword: true,
-                    isCodeSend: true,
-                    isResetSucces: false,
+                    ...testInitialState,
                     isPasswordHidden: false,
                 },
                 {
                     type: types.HIDE_CURRENT_RESET_INPUT_PASSWORD,
                 }
             )
-        ).toEqual({
-            inputsPage1ForgotPassword: {
-                email: "1@1.ru",
-            },
-            inputsPage2ResetPassword: {
-                password: "1",
-                code: "1212",
-            },
-            isLoadingForgotPassword: true,
-            isLoadingResetPassword: true,
-            isCodeSend: true,
-            isResetSucces: false,
-            isPasswordHidden: true,
-        })
+        ).toEqual(testInitialState)
     })
 
     it('SHOW_CURRENT_RESET_INPUT_PASSWORD', () => {
@@ -728,53 +333,19 @@ describe('resetPassword reducer', () => {
             })
         ).toEqual(
             {
-                inputsPage1ForgotPassword: {
-                    email: "",
-                },
-                inputsPage2ResetPassword: {
-                    password: "",
-                    code: "",
-                },
-                isLoadingForgotPassword: false,
-                isLoadingResetPassword: false,
-                isCodeSend: false,
-                isResetSucces: false,
+                ...initialState,
                 isPasswordHidden: false,
             }
         )
 
         expect(
-            reducer(
-                {
-                    inputsPage1ForgotPassword: {
-                        email: "1@1.ru",
-                    },
-                    inputsPage2ResetPassword: {
-                        password: "1",
-                        code: "1212",
-                    },
-                    isLoadingForgotPassword: true,
-                    isLoadingResetPassword: true,
-                    isCodeSend: true,
-                    isResetSucces: false,
-                    isPasswordHidden: true,
-                },
+            reducer(testInitialState,
                 {
                     type: types.SHOW_CURRENT_RESET_INPUT_PASSWORD,
                 }
             )
         ).toEqual({
-            inputsPage1ForgotPassword: {
-                email: "1@1.ru",
-            },
-            inputsPage2ResetPassword: {
-                password: "1",
-                code: "1212",
-            },
-            isLoadingForgotPassword: true,
-            isLoadingResetPassword: true,
-            isCodeSend: true,
-            isResetSucces: false,
+            ...testInitialState,
             isPasswordHidden: false,
         })
     })

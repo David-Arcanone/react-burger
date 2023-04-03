@@ -1,4 +1,4 @@
-import { burgerIngredientsReducer as reducer } from '../BurgerIngredients.ts';
+import { burgerIngredientsReducer as reducer, initialState } from '../BurgerIngredients.ts';
 import * as types from '../../constants/BurgerIngredients/BurgerIngredients';
 const testArrayBuns = [{
     _id: "01",
@@ -97,20 +97,22 @@ const testArrayIngredients2 = [
         image_large: "pic29l",
         __v: 99,
     }
-]
+];
+const testInitialState = {
+    ingredients: [{ qty: 0, ingredientData: testArrayIngredients[0] }, { qty: 0, ingredientData: testArrayIngredients[1] }],
+    buns: [{ qty: 2, ingredientData: testArrayBuns[0] }, { qty: 0, ingredientData: testArrayBuns[1] }],
+
+    ingredientRequest: false,
+    ingredientRequestFailed: false,
+    bunsTabStatus: true,
+    souceTabStatus: false,
+    mainTabStatus: false,
+    readyIngredients: true
+}
 
 describe('burgerIngredients reducer', () => {
     it('should return the initial state', () => {
-        expect(reducer(undefined, {})).toEqual({
-            ingredients: [],
-            buns: [],
-            ingredientRequest: false,
-            ingredientRequestFailed: false,
-            bunsTabStatus: false,
-            souceTabStatus: false,
-            mainTabStatus: false,
-            readyIngredients: false
-        })
+        expect(reducer(undefined, {})).toEqual(initialState)
     })
 
     it('DOWNLOAD_INGREDIENTS_REQUEST', () => {
@@ -120,17 +122,10 @@ describe('burgerIngredients reducer', () => {
             })
         ).toEqual(
             {
-                ingredients: [],
-                buns: [],
+                ...initialState,
                 ingredientRequest: true,
-                ingredientRequestFailed: false,
-                bunsTabStatus: false,
-                souceTabStatus: false,
-                mainTabStatus: false,
-                readyIngredients: false
             }
         )
-
     })
 
     it('DOWNLOAD_INGREDIENTS_SUCCES', () => {
@@ -143,13 +138,10 @@ describe('burgerIngredients reducer', () => {
             })
         ).toEqual(
             {
+                ...initialState,
                 ingredients: [{ qty: 0, ingredientData: testArrayIngredients[0] }, { qty: 0, ingredientData: testArrayIngredients[1] }],
                 buns: [{ qty: 0, ingredientData: testArrayBuns[0] }, { qty: 0, ingredientData: testArrayBuns[1] }],
-                ingredientRequest: false,
-                ingredientRequestFailed: false,
-                bunsTabStatus: false,
-                souceTabStatus: false,
-                mainTabStatus: false,
+
                 readyIngredients: true
             }
         )
@@ -157,14 +149,9 @@ describe('burgerIngredients reducer', () => {
         expect(
             reducer(
                 {
-                    ingredients: [{ qty: 0, ingredientData: testArrayIngredients[0] }, { qty: 0, ingredientData: testArrayIngredients[1] }],
-                    buns: [{ qty: 0, ingredientData: testArrayBuns[0] }, { qty: 0, ingredientData: testArrayBuns[1] }],
+                    ...testInitialState,
                     ingredientRequest: true,
-                    ingredientRequestFailed: false,
-                    bunsTabStatus: false,
-                    souceTabStatus: false,
-                    mainTabStatus: false,
-                    readyIngredients: true
+                    readyIngredients: false
                 },
                 {
                     type: types.DOWNLOAD_INGREDIENTS_SUCCES,
@@ -173,14 +160,9 @@ describe('burgerIngredients reducer', () => {
                 }
             )
         ).toEqual({
+            ...testInitialState,
             ingredients: [{ qty: 0, ingredientData: testArrayIngredients2[0] }, { qty: 0, ingredientData: testArrayIngredients2[1] }],
             buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }],
-            ingredientRequest: false,
-            ingredientRequestFailed: false,
-            bunsTabStatus: false,
-            souceTabStatus: false,
-            mainTabStatus: false,
-            readyIngredients: true
         })
     })
 
@@ -192,41 +174,23 @@ describe('burgerIngredients reducer', () => {
             })
         ).toEqual(
             {
-                ingredients: [],
-                buns: [],
+                ...initialState,
                 ingredientRequestFailed: true,
-                ingredientRequest: false,
-                bunsTabStatus: false,
-                souceTabStatus: false,
-                mainTabStatus: false,
-                readyIngredients: false
             }
         )
         expect(
             reducer(
                 {
-                    ingredients: [{ qty: 0, ingredientData: testArrayIngredients[0] }, { qty: 0, ingredientData: testArrayIngredients[1] }],
-                    buns: [{ qty: 0, ingredientData: testArrayBuns[0] }, { qty: 0, ingredientData: testArrayBuns[1] }],
+                    ...testInitialState,
                     ingredientRequest: true,
-                    ingredientRequestFailed: false,
-                    bunsTabStatus: false,
-                    souceTabStatus: false,
-                    mainTabStatus: false,
-                    readyIngredients: true
                 },
                 {
                     type: types.DOWNLOAD_INGREDIENTS_FAILED,
                 }
             )
         ).toEqual({
-            ingredients: [{ qty: 0, ingredientData: testArrayIngredients[0] }, { qty: 0, ingredientData: testArrayIngredients[1] }],
-            buns: [{ qty: 0, ingredientData: testArrayBuns[0] }, { qty: 0, ingredientData: testArrayBuns[1] }],
-            ingredientRequest: false,
+            ...testInitialState,
             ingredientRequestFailed: true,
-            bunsTabStatus: false,
-            souceTabStatus: false,
-            mainTabStatus: false,
-            readyIngredients: true
         })
     })
 
@@ -237,46 +201,21 @@ describe('burgerIngredients reducer', () => {
                 num: 0,
             })
         ).toEqual(
-            {
-                ingredients: [],
-                buns: [],
-                ingredientRequest: false,
-                ingredientRequestFailed: false,
-                bunsTabStatus: false,
-                souceTabStatus: false,
-                mainTabStatus: false,
-                readyIngredients: false
-            }
+            initialState
         )
 
         expect(
             reducer(
-                {
-                    ingredients: [{ qty: 1, ingredientData: testArrayIngredients2[0] },
-                    { qty: 1, ingredientData: testArrayIngredients2[1] }],
-                    buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }],
-                    ingredientRequest: false,
-                    ingredientRequestFailed: false,
-                    bunsTabStatus: false,
-                    souceTabStatus: false,
-                    mainTabStatus: false,
-                    readyIngredients: true
-                },
+                testInitialState,
                 {
                     type: types.INCREASE_INGREDIENT_AMOUNT,
                     num: 0,
                 }
             )
         ).toEqual({
-            ingredients: [{ qty: 2, ingredientData: testArrayIngredients2[0] },
-            { qty: 1, ingredientData: testArrayIngredients2[1] }],
-            buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }],
-            ingredientRequest: false,
-            ingredientRequestFailed: false,
-            bunsTabStatus: false,
-            souceTabStatus: false,
-            mainTabStatus: false,
-            readyIngredients: true
+            ...testInitialState,
+            ingredients: [{ qty: 1, ingredientData: testArrayIngredients[0] }, testInitialState.ingredients[1]]
+
         })
     })
 
@@ -284,49 +223,24 @@ describe('burgerIngredients reducer', () => {
         expect(
             reducer(undefined, {
                 type: types.DECREASE_INGREDIENT_AMOUNT,
-                _id: "88",
+                _id: "11",
             })
-        ).toEqual(
-            {
-                ingredients: [],
-                buns: [],
-                ingredientRequest: false,
-                ingredientRequestFailed: false,
-                bunsTabStatus: false,
-                souceTabStatus: false,
-                mainTabStatus: false,
-                readyIngredients: false
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
             reducer(
                 {
-                    ingredients: [{ qty: 1, ingredientData: testArrayIngredients2[0] },
-                    { qty: 1, ingredientData: testArrayIngredients2[1] }],
-                    buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }],
-                    ingredientRequest: false,
-                    ingredientRequestFailed: false,
-                    bunsTabStatus: false,
-                    souceTabStatus: false,
-                    mainTabStatus: false,
-                    readyIngredients: true
+                    ...testInitialState,
+                    ingredients: [{ qty: 6, ingredientData: testArrayIngredients[0] }, testInitialState.ingredients[1]]
                 },
                 {
                     type: types.DECREASE_INGREDIENT_AMOUNT,
-                    _id: "88",
+                    _id: "11",
                 }
             )
         ).toEqual({
-            ingredients: [{ qty: 0, ingredientData: testArrayIngredients2[0] },
-            { qty: 1, ingredientData: testArrayIngredients2[1] }],
-            buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }],
-            ingredientRequest: false,
-            ingredientRequestFailed: false,
-            bunsTabStatus: false,
-            souceTabStatus: false,
-            mainTabStatus: false,
-            readyIngredients: true
+            ...testInitialState,
+            ingredients: [{ qty: 5, ingredientData: testArrayIngredients[0] }, testInitialState.ingredients[1]]
         })
     })
 
@@ -336,47 +250,18 @@ describe('burgerIngredients reducer', () => {
                 type: types.CHANGE_BUNS,
                 num: 0,
             })
-        ).toEqual(
-            {
-                ingredients: [],
-                buns: [],
-                ingredientRequest: false,
-                ingredientRequestFailed: false,
-                bunsTabStatus: false,
-                souceTabStatus: false,
-                mainTabStatus: false,
-                readyIngredients: false,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
-            reducer(
-                {
-                    ingredients: [{ qty: 1, ingredientData: testArrayIngredients2[0] },
-                    { qty: 1, ingredientData: testArrayIngredients2[1] }],
-                    buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }, { qty: 2, ingredientData: testArrayBuns[0] }],
-                    ingredientRequest: false,
-                    ingredientRequestFailed: false,
-                    bunsTabStatus: false,
-                    souceTabStatus: false,
-                    mainTabStatus: false,
-                    readyIngredients: true
-                },
+            reducer(testInitialState,
                 {
                     type: types.CHANGE_BUNS,
-                    num: 0,
+                    num: 1,
                 }
             )
         ).toEqual({
-            ingredients: [{ qty: 1, ingredientData: testArrayIngredients2[0] },
-            { qty: 1, ingredientData: testArrayIngredients2[1] }],
-            buns: [{ qty: 2, ingredientData: testArrayBuns2[0] }, { qty: 0, ingredientData: testArrayBuns[0] }],
-            ingredientRequest: false,
-            ingredientRequestFailed: false,
-            bunsTabStatus: false,
-            souceTabStatus: false,
-            mainTabStatus: false,
-            readyIngredients: true
+            ...testInitialState,
+            buns: [{ qty: 0, ingredientData: testArrayBuns[0] }, { qty: 2, ingredientData: testArrayBuns[1] }],
         })
     })
 
@@ -390,29 +275,43 @@ describe('burgerIngredients reducer', () => {
             })
         ).toEqual(
             {
-                ingredients: [],
-                buns: [],
-                ingredientRequest: false,
-                ingredientRequestFailed: false,
+                ...initialState,
                 bunsTabStatus: true,
-                souceTabStatus: false,
-                mainTabStatus: false,
-                readyIngredients: false,
             }
         )
-
+        expect(
+            reducer(undefined, {
+                type: types.REFRESH_TABS,
+                bunsTab: false,
+                souceTab: true,
+                mainTab: false
+            })
+        ).toEqual(
+            {
+                ...initialState,
+                souceTabStatus: true,
+            }
+        )
+        expect(
+            reducer(undefined, {
+                type: types.REFRESH_TABS,
+                bunsTab: false,
+                souceTab: false,
+                mainTab: true,
+            })
+        ).toEqual(
+            {
+                ...initialState,
+                mainTabStatus: true,
+            }
+        )
         expect(
             reducer(
                 {
-                    ingredients: [{ qty: 1, ingredientData: testArrayIngredients2[0] },
-                    { qty: 1, ingredientData: testArrayIngredients2[1] }],
-                    buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }, { qty: 2, ingredientData: testArrayBuns[0] }],
-                    ingredientRequest: false,
-                    ingredientRequestFailed: false,
+                    ...testInitialState,
                     bunsTabStatus: false,
-                    souceTabStatus: false,
-                    mainTabStatus: false,
-                    readyIngredients: true
+                    souceTabStatus: true,
+                    mainTabStatus: true,
                 },
                 {
                     type: types.REFRESH_TABS,
@@ -421,30 +320,13 @@ describe('burgerIngredients reducer', () => {
                     mainTab: false
                 }
             )
-        ).toEqual({
-            ingredients: [{ qty: 1, ingredientData: testArrayIngredients2[0] },
-            { qty: 1, ingredientData: testArrayIngredients2[1] }],
-            buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }, { qty: 2, ingredientData: testArrayBuns[0] }],
-            ingredientRequest: false,
-            ingredientRequestFailed: false,
-            bunsTabStatus: true,
-            souceTabStatus: false,
-            mainTabStatus: false,
-            readyIngredients: true
-        })
+        ).toEqual(testInitialState)
 
         expect(
             reducer(
                 {
-                    ingredients: [{ qty: 1, ingredientData: testArrayIngredients2[0] },
-                    { qty: 1, ingredientData: testArrayIngredients2[1] }],
-                    buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }, { qty: 2, ingredientData: testArrayBuns[0] }],
-                    ingredientRequest: false,
-                    ingredientRequestFailed: false,
-                    bunsTabStatus: false,
-                    souceTabStatus: false,
-                    mainTabStatus: false,
-                    readyIngredients: true
+                    ...testInitialState,
+                    mainTabStatus: true,
                 },
                 {
                     type: types.REFRESH_TABS,
@@ -454,29 +336,18 @@ describe('burgerIngredients reducer', () => {
                 }
             )
         ).toEqual({
-            ingredients: [{ qty: 1, ingredientData: testArrayIngredients2[0] },
-            { qty: 1, ingredientData: testArrayIngredients2[1] }],
-            buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }, { qty: 2, ingredientData: testArrayBuns[0] }],
-            ingredientRequest: false,
-            ingredientRequestFailed: false,
+            ...testInitialState,
             bunsTabStatus: false,
             souceTabStatus: true,
             mainTabStatus: false,
-            readyIngredients: true
         })
 
         expect(
             reducer(
                 {
-                    ingredients: [{ qty: 1, ingredientData: testArrayIngredients2[0] },
-                    { qty: 1, ingredientData: testArrayIngredients2[1] }],
-                    buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }, { qty: 2, ingredientData: testArrayBuns[0] }],
-                    ingredientRequest: false,
-                    ingredientRequestFailed: false,
-                    bunsTabStatus: false,
-                    souceTabStatus: false,
+                    ...testInitialState,
+                    souceTabStatus: true,
                     mainTabStatus: false,
-                    readyIngredients: true
                 },
                 {
                     type: types.REFRESH_TABS,
@@ -486,15 +357,9 @@ describe('burgerIngredients reducer', () => {
                 }
             )
         ).toEqual({
-            ingredients: [{ qty: 1, ingredientData: testArrayIngredients2[0] },
-            { qty: 1, ingredientData: testArrayIngredients2[1] }],
-            buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }, { qty: 2, ingredientData: testArrayBuns[0] }],
-            ingredientRequest: false,
-            ingredientRequestFailed: false,
+            ...testInitialState,
             bunsTabStatus: false,
-            souceTabStatus: false,
             mainTabStatus: true,
-            readyIngredients: true
         })
     })
 
@@ -503,46 +368,19 @@ describe('burgerIngredients reducer', () => {
             reducer(undefined, {
                 type: types.CLEAN_SELECTED_INGREDIENTS,
             })
-        ).toEqual(
-            {
-                ingredients: [],
-                buns: [],
-                ingredientRequest: false,
-                ingredientRequestFailed: false,
-                bunsTabStatus: false,
-                souceTabStatus: false,
-                mainTabStatus: false,
-                readyIngredients: false
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
-            reducer(
-                {
-                    ingredients: [{ qty: 2, ingredientData: testArrayIngredients2[0] },
-                    { qty: 1, ingredientData: testArrayIngredients2[1] }],
-                    buns: [{ qty: 2, ingredientData: testArrayBuns2[0] }],
-                    ingredientRequest: false,
-                    ingredientRequestFailed: false,
-                    bunsTabStatus: false,
-                    souceTabStatus: false,
-                    mainTabStatus: false,
-                    readyIngredients: true
-                },
-                {
-                    type: types.CLEAN_SELECTED_INGREDIENTS,
-                }
+            reducer({
+                ...testInitialState,
+                ingredients: [{ qty: 6, ingredientData: testArrayIngredients[0] }, { qty: 7, ingredientData: testArrayIngredients[1] }],
+            },
+                { type: types.CLEAN_SELECTED_INGREDIENTS }
             )
         ).toEqual({
-            ingredients: [{ qty: 0, ingredientData: testArrayIngredients2[0] },
-            { qty: 0, ingredientData: testArrayIngredients2[1] }],
-            buns: [{ qty: 0, ingredientData: testArrayBuns2[0] }],
-            ingredientRequest: false,
-            ingredientRequestFailed: false,
-            bunsTabStatus: false,
-            souceTabStatus: false,
-            mainTabStatus: false,
-            readyIngredients: true
+            ...testInitialState,
+            ingredients: [{ qty: 0, ingredientData: testArrayIngredients[0] }, { qty: 0, ingredientData: testArrayIngredients[1] }],
+            buns: [{ qty: 0, ingredientData: testArrayBuns[0] }, testInitialState.buns[1]],
         })
     })
 })

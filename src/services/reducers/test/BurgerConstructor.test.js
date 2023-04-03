@@ -1,5 +1,6 @@
-import { burgerConstructorReducer as reducer } from '../BurgerConstructor.ts';
+import { burgerConstructorReducer as reducer, initialState } from '../BurgerConstructor.ts';
 import * as types from '../../constants/BurgerConstructor/BurgerConstructor';
+
 const testArrayBuns = [{
     _id: "01",
     name: "food1",
@@ -98,17 +99,18 @@ const testArrayIngredients2 = [
         __v: 99,
     }
 ]
+const testInitialState1 = {
+    bunsMenu: testArrayBuns,
+    ingredientsMenu: testArrayIngredients,
+    orderBun: 1,
+    orderIngredients: [{ uuid: "1", ingredientType: 0 }, { uuid: "2", ingredientType: 1 }],
+    totalPrice: 900,
+    ready: true,
+}
 
 describe('BurgerConstructor reducer', () => {
     it('should return the initial state', () => {
-        expect(reducer(undefined, {})).toEqual({
-            bunsMenu: [],
-            ingredientsMenu: [],
-            orderBun: 0,
-            orderIngredients: [],
-            totalPrice: 0,
-            ready: false,
-        })
+        expect(reducer(undefined, {})).toEqual(initialState)
     })
 
     it('INIT_CONSTRUCTOR_LIBRARY', () => {
@@ -118,28 +120,20 @@ describe('BurgerConstructor reducer', () => {
                 payloadIngredients: testArrayIngredients,
                 payloadBuns: testArrayBuns,
             })
-        ).toEqual(
-            {
-                bunsMenu: testArrayBuns,
-                ingredientsMenu: testArrayIngredients,
-                orderBun: 0,
-                orderIngredients: [],
-                totalPrice: 0,
-                ready: true,
-            }
+        ).toEqual({
+            ...initialState,
+            bunsMenu: testArrayBuns,
+            ingredientsMenu: testArrayIngredients,
+            ready: true,
+        }
         )
 
         expect(
             reducer(
                 {
-                    bunsMenu: testArrayBuns,
-                    ingredientsMenu: testArrayIngredients,
-                    orderBun: 1,
-                    orderIngredients: [],
-                    totalPrice: 10,
-                    ready: false,
-                }
-                ,
+                    ...testInitialState1,
+                    ready: false
+                },
                 {
                     type: types.INIT_CONSTRUCTOR_LIBRARY,
                     payloadBuns: testArrayBuns2,
@@ -147,11 +141,9 @@ describe('BurgerConstructor reducer', () => {
                 }
             )
         ).toEqual({
+            ...testInitialState1,
             bunsMenu: testArrayBuns2,
             ingredientsMenu: testArrayIngredients2,
-            orderBun: 1,
-            orderIngredients: [],
-            totalPrice: 10,
             ready: true,
         })
     })
@@ -164,40 +156,21 @@ describe('BurgerConstructor reducer', () => {
                 deletedIngredientType: 1,
                 uuid: "1",
             })
-        ).toEqual(
-            {
-                bunsMenu: [],
-                ingredientsMenu: [],
-                orderBun: 0,
-                orderIngredients: [],
-                totalPrice: 0,
-                ready: false,
-            }
-        )
+        ).toEqual(initialState)
         //проверка удаления
         expect(
             reducer(
-                {
-                    bunsMenu: testArrayBuns,
-                    ingredientsMenu: testArrayIngredients,
-                    orderBun: 1,
-                    orderIngredients: [{ uuid: "1", ingredientType: 1 }, { uuid: "0", ingredientType: 0 }],
-                    totalPrice: 10000,
-                    ready: true,
-                },
+                testInitialState1,
                 {
                     type: types.DELETE_INGREDIENT_FROM_CONSTRUCTOR,
-                    deletedIngredientType: 1,
+                    deletedIngredientType: 0,
                     uuid: "1",
                 }
             )
         ).toEqual({
-            bunsMenu: testArrayBuns,
-            ingredientsMenu: testArrayIngredients,
-            orderBun: 1,
-            orderIngredients: [{ uuid: "0", ingredientType: 0 }],
-            totalPrice: 9600,
-            ready: true,
+            ...testInitialState1,
+            orderIngredients: [{ uuid: "2", ingredientType: 1 }],
+            totalPrice: 600,
         })
     })
 
@@ -211,25 +184,13 @@ describe('BurgerConstructor reducer', () => {
             })
         ).toEqual(
             {
-                bunsMenu: [],
-                ingredientsMenu: [],
-                orderBun: 0,
+                ...initialState,
                 orderIngredients: [{ ingredientType: 1, uuid: "1" }],
-                totalPrice: 0,
-                ready: false,
             }
         )
         //проверка добавления в существующий список заказа
         expect(
-            reducer(
-                {
-                    bunsMenu: testArrayBuns,
-                    ingredientsMenu: testArrayIngredients,
-                    orderBun: 1,
-                    orderIngredients: [{ uuid: "1", ingredientType: 1 }, { uuid: "2", ingredientType: 2 }],
-                    totalPrice: 10000,
-                    ready: true,
-                },
+            reducer(testInitialState1,
                 {
                     type: types.ADD_INGREDIENT_TO_CONSTRUCTOR,
                     menuIndex: 0,
@@ -237,12 +198,9 @@ describe('BurgerConstructor reducer', () => {
                 }
             )
         ).toEqual({
-            bunsMenu: testArrayBuns,
-            ingredientsMenu: testArrayIngredients,
-            orderBun: 1,
-            orderIngredients: [{ uuid: "1", ingredientType: 1 }, { uuid: "2", ingredientType: 2 }, { uuid: "11", ingredientType: 0 }],
-            totalPrice: 10300,
-            ready: true,
+            ...testInitialState1,
+            orderIngredients: [...testInitialState1.orderIngredients, { uuid: "11", ingredientType: 0 }],
+            totalPrice: 1200,
         })
     })
 
@@ -254,37 +212,23 @@ describe('BurgerConstructor reducer', () => {
             })
         ).toEqual(
             {
-                bunsMenu: [],
-                ingredientsMenu: [],
-                orderBun: 1,
-                orderIngredients: [],
-                totalPrice: 0,
-                ready: false,
+                ...initialState,
+                orderBun: 1
             }
         )
 
         expect(
             reducer(
-                {
-                    bunsMenu: testArrayBuns,
-                    ingredientsMenu: testArrayIngredients,
-                    orderBun: 2,
-                    orderIngredients: [],
-                    totalPrice: 10000,
-                    ready: true,
-                },
+                testInitialState1,
                 {
                     type: types.CHANGE_ORDER_BUN,
-                    menuIndex: 0,
+                    menuIndex: 1,
                 }
             )
         ).toEqual({
-            bunsMenu: testArrayBuns,
-            ingredientsMenu: testArrayIngredients,
-            orderBun: 1,
-            orderIngredients: [],
-            totalPrice: 9800,
-            ready: true,
+            ...testInitialState1,
+            orderBun: 2,
+            totalPrice: 1100,
         })
     })
 
@@ -296,25 +240,12 @@ describe('BurgerConstructor reducer', () => {
                 newIndex: 0,
                 oldIndex: 2,
             })
-        ).toEqual(
-            {
-                bunsMenu: [],
-                ingredientsMenu: [],
-                orderBun: 0,
-                orderIngredients: [],
-                totalPrice: 0,
-                ready: false,
-            }
-        )
+        ).toEqual(initialState)
         expect(
             reducer(
                 {
-                    bunsMenu: [],
-                    ingredientsMenu: [],
-                    orderBun: 0,
+                    testInitialState1,
                     orderIngredients: [{ uuid: "1", ingredientType: 1 }, { uuid: "2", ingredientType: 2 }, { uuid: "3", ingredientType: 3 }, { uuid: "4", ingredientType: 4 }],
-                    totalPrice: 0,
-                    ready: true,
                 },
                 {
                     type: types.MOVE_INGREDIENT,
@@ -323,12 +254,8 @@ describe('BurgerConstructor reducer', () => {
                 }
             )
         ).toEqual({
-            bunsMenu: [],
-            ingredientsMenu: [],
-            orderBun: 0,
+            testInitialState1,
             orderIngredients: [{ uuid: "3", ingredientType: 3 }, { uuid: "1", ingredientType: 1 }, { uuid: "2", ingredientType: 2 }, { uuid: "4", ingredientType: 4 }],
-            totalPrice: 0,
-            ready: true,
         })
     })
 
@@ -337,77 +264,37 @@ describe('BurgerConstructor reducer', () => {
             reducer(undefined, {
                 type: types.REFRESH_PRICE,
             })
-        ).toEqual(
-            {
-                bunsMenu: [],
-                ingredientsMenu: [],
-                orderBun: 0,
-                orderIngredients: [],
-                totalPrice: 0,
-                ready: false,
-            }
-        )
+        ).toEqual(initialState)
 
         expect(
             reducer(
                 {
-                    bunsMenu: testArrayBuns,
-                    ingredientsMenu: testArrayIngredients,
-                    orderBun: 1,
-                    orderIngredients: [{ uuid: "1", ingredientType: 0 }, { uuid: "2", ingredientType: 1 }],
+                    ...testInitialState1,
                     totalPrice: 99999,
-                    ready: true,
                 },
                 {
                     type: types.REFRESH_PRICE,
                 }
             )
-        ).toEqual({
-            bunsMenu: testArrayBuns,
-            ingredientsMenu: testArrayIngredients,
-            orderBun: 1,
-            orderIngredients: [{ uuid: "1", ingredientType: 0 }, { uuid: "2", ingredientType: 1 }],
-            totalPrice: 900,
-            ready: true,
-        })
+        ).toEqual(testInitialState1)
     })
 
-    it('REFRESH_PRICE', () => {
+    it('CLEAN_CONSTRUCTOR', () => {
         expect(
             reducer(undefined, {
                 type: types.CLEAN_CONSTRUCTOR,
             })
-        ).toEqual(
-            {
-                bunsMenu: [],
-                ingredientsMenu: [],
-                orderBun: 0,
-                orderIngredients: [],
-                totalPrice: 0,
-                ready: false,
-            }
-        )
+        ).toEqual(initialState)
         expect(
             reducer(
-                {
-                    bunsMenu: testArrayBuns,
-                    ingredientsMenu: testArrayIngredients,
-                    orderBun: 1,
-                    orderIngredients: [{ uuid: "1", ingredientType: 1 }, { uuid: "2", ingredientType: 2 }],
-                    totalPrice: 99999,
-                    ready: true,
-                },
-                {
-                    type: types.CLEAN_CONSTRUCTOR,
-                }
+                testInitialState1,
+                { type: types.CLEAN_CONSTRUCTOR }
             )
         ).toEqual({
-            bunsMenu: testArrayBuns,
-            ingredientsMenu: testArrayIngredients,
+            ...testInitialState1,
             orderBun: 0,
             orderIngredients: [],
             totalPrice: 0,
-            ready: true,
         })
     })
 })
