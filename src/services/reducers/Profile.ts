@@ -13,7 +13,7 @@ import {
 } from "../constants/Profile/Profile";
 import { IProfileState } from "../types/Profile/Profile";
 
-const initialState: IProfileState = {
+export const initialState: IProfileState = {
     inputs: {
         email: "",
         password: "",

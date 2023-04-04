@@ -4,7 +4,7 @@ import { ADD_INGREDIENT_TO_CONSTRUCTOR, CHANGE_ORDER_BUN, CLEAN_CONSTRUCTOR, DEL
 import { IBurgerConstructorState } from "../types/BurgerConstructor/BurgerConstructor";
 
 
-const initialState: IBurgerConstructorState = {
+export const initialState: IBurgerConstructorState = {
   bunsMenu: [],
   ingredientsMenu: [],
   orderBun: 0, // индексы булочек сдвигаю на +1, 0 будет когда булок нет.
@@ -26,38 +26,39 @@ export const burgerConstructorReducer = (state = initialState, action: TBurgerCo
     case DELETE_INGREDIENT_FROM_CONSTRUCTOR: {
       return {
         ...state,
-        totalPrice: state.totalPrice - (state.ingredientsMenu[action.deletedIngredientType].price ?? 0),
+        totalPrice: state.totalPrice - (state.ingredientsMenu[action.deletedIngredientType]?.price ?? 0),
         orderIngredients: [...state.orderIngredients].filter(foodItem => foodItem.uuid !== action.uuid)
       };
     }
     case ADD_INGREDIENT_TO_CONSTRUCTOR: {
       return {
         ...state,
-        totalPrice: state.totalPrice + (state.ingredientsMenu[action.menuIndex].price ?? 0),
+        totalPrice: state.totalPrice + (state.ingredientsMenu[action.menuIndex]?.price ?? 0),
         orderIngredients: [...state.orderIngredients, { uuid: action.uuid, ingredientType: action.menuIndex }]
       };
     }
     case CHANGE_ORDER_BUN: {
-      const priceDecrease = (state.orderBun === 0) ? 0 : (state.bunsMenu[state.orderBun - 1].price ?? 0) * 2;
+      const priceDecrease = (state.orderBun === 0) ? 0 : (state.bunsMenu[state.orderBun - 1]?.price ?? 0) * 2;
       return {
         ...state,
-        totalPrice: state.totalPrice - priceDecrease + (state.bunsMenu[action.menuIndex].price ?? 0) * 2,
+        totalPrice: state.totalPrice - priceDecrease + (state.bunsMenu[action.menuIndex]?.price ?? 0) * 2,
         orderBun: action.menuIndex + 1,
       };
     }
     case MOVE_INGREDIENT: {
       const cloneOrderIngredients = state.orderIngredients.slice(0); //нельзя напрямую влиять на state, поэтому создам клон для работы можно через [...state.orderIngredients]
       cloneOrderIngredients.splice(action.newIndex, 0, cloneOrderIngredients.splice(action.oldIndex, 1)[0]);
+      const correctData=(0<=action.newIndex && action.newIndex<state.orderIngredients.length && 0<=action.oldIndex && action.oldIndex<state.orderIngredients.length);
       return {
         ...state,
-        orderIngredients: cloneOrderIngredients,
+        orderIngredients: (correctData)?cloneOrderIngredients:state.orderIngredients,
       };
     }
     case REFRESH_PRICE: {
       return {
         ...state,
-        totalPrice: (state.bunsMenu[state.orderBun - 1].price ?? 0) * 2 + state.orderIngredients.reduce((sum, ingredient) => {
-          return (state.ingredientsMenu[ingredient.ingredientType].price ?? 0) + sum;
+        totalPrice: (state.bunsMenu[state.orderBun - 1]?.price ?? 0) * 2 + state.orderIngredients.reduce((sum, ingredient) => {
+          return (state.ingredientsMenu[ingredient.ingredientType]?.price ?? 0) + sum;
         }, 0)
       };
     }

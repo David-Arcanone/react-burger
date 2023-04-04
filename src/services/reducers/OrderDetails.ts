@@ -3,7 +3,7 @@ import { CLEAR_ORDER, LOAD_ORDER_REQUEST, LOAD_ORDER_REQUEST_FAILED, LOAD_ORDER_
 import { IOrderDetailsState } from "../types/OrderDetails/OrderDetails";
 
 
-const initialState:IOrderDetailsState = {
+export const initialState:IOrderDetailsState = {
   orderRequest: false,
   orderRequestFailed: false,
   orderNumber: "загрузка",

@@ -1,9 +1,7 @@
 
 import { TRequestBodyRefreshToken, TRequestDataRefreshToken } from "../../services/types/api/api";
 import {configStandartRequest, requestServer} from "../api/api";
-type TSetCookieProps = {
-  [key: string]: any;
-};
+
 export function setCookie(
   name: string,
   value: string,

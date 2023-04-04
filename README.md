@@ -27,7 +27,9 @@
 Есть просмотр заказов во вкладке Лента заказов, в опции история заказов с личного кабинета.
 Реализована возможность просмотреть подробности заказа в модальном или отдельном окне.
 Согласно заданию, поиск выполнен по ID заказов, а не номеру, лимит 50 последних заказов c вебсокета, если ваш заказ не входит в список, его не выведет.
-
+Реализованы тесты всех редьюсеров, код в папке src/services/reducers/test.
+Cypress тесты для домашней страницы в папке cypress/e2e/home.cy.js.
+Линк на работу https://david-arcanone.github.io/react-burger/index.html
 
 **Технологии**
 html, css, js, typescript, библиотека react, redux , react-redux , redux-thunk , react-dnd , react-dnd-html5-backend, react-router-dom . Применяется шрифт JetBrains Mono и Набор UI-компонентов для курсового проекта React Developer Burger Ui Components.

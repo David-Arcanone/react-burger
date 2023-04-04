@@ -2,7 +2,7 @@ import { TRegisterActions } from "../actions/Register/Register";
 import { CHANGE_CURRENT_REGISTER_INPUT_EMAIL, CHANGE_CURRENT_REGISTER_INPUT_NAME, CHANGE_CURRENT_REGISTER_INPUT_PASSWORD, CLEAR_CURRENT_REGISTER_INPUTS, HIDE_CURRENT_REGISTER_INPUT_PASSWORD, REGISTER_REQUEST_FAILED, REGISTER_REQUEST_START, REGISTER_REQUEST_SUCCES, SHOW_CURRENT_REGISTER_INPUT_PASSWORD } from "../constants/Register/Register";
 import { IRegisterState } from "../types/Register/Register";
 
-const initialState:IRegisterState = {
+export const initialState:IRegisterState = {
     inputs: {
         email: "",
         password: "",

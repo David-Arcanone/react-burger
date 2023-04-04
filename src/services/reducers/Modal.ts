@@ -2,7 +2,7 @@ import {TModalActions} from '../actions/Modal/Modal';
 import { CLOSE_MODAL, OPEN_INGREDIENT_FOCUS, OPEN_ORDER_INFO } from '../constants/Modal/Modal';
 import { IModalState } from '../types/Modal/Modal';
   
-  const initialState:IModalState = {
+  export const initialState:IModalState = {
     modalData: ""
   };
   

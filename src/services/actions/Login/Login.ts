@@ -1,5 +1,5 @@
 import { configAdvancedRequest, configAdvancedRequestNoBody, configStandartRequest, requestServer, requestServerWithRefresh } from "../../../utils/api/api";
-import { getCookie } from "../../../utils/authentication/authentication";
+import { deleteCookie, getCookie, setCookie } from "../../../utils/authentication/authentication";
 import {
     AUTH_CHECKED,
     CHANGE_CURRENT_LOGIN_INPUT_EMAIL,
@@ -25,8 +25,6 @@ export interface ILoginRequest {
 
 export interface ILoginRequestSucces {
     type: typeof LOGIN_REQUEST_SUCCES;
-    newRefreshToken: string;
-    newAccesToken: string;
 };
 
 export interface ILoginRelogin {
@@ -94,10 +92,11 @@ export type TLoginActions = ITrackLogin
     | IAuthChecked;
 
 export function processLoginRequestSucces(newRefreshToken: string, newAccesToken: string): ILoginRequestSucces {
+    setCookie("accessTokenBurger", newAccesToken, { expires: 1200 });
+    window.localStorage.setItem("refreshTokenBurger", newRefreshToken);
+    setCookie("isLoggedIn", "Logged", {});
     return {
         type: LOGIN_REQUEST_SUCCES,
-        newRefreshToken,
-        newAccesToken,
     };
 }
 
@@ -128,12 +127,18 @@ export const makeLogOut: AppThunk = () => (dispatch: AppDispatch) => {
             dispatch({
                 type: LOGOUT_REQUEST_SUCCES,
             });
+            deleteCookie("accessTokenBurger");//удаляем токен доступа
+            window.localStorage.removeItem("refreshTokenBurger"); //можно реализовать сохранение входа между сенсами
+            deleteCookie("isLoggedIn"); //удаляем флаг входа
         })
         .catch(() => {
             console.log("error log out");
             dispatch({
                 type: LOGOUT_REQUEST_ERROR
             });
+            deleteCookie("accessTokenBurger");//удаляем токен доступа
+            window.localStorage.removeItem("refreshTokenBurger"); //можно реализовать сохранение входа между сенсами
+            deleteCookie("isLoggedIn");//удаляем флаг входа
         })
 };
 
