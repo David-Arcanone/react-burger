@@ -26,18 +26,16 @@
 Типизировано по Typescript. Сторэдж тоже реализован в Typesript.
 Есть просмотр заказов во вкладке Лента заказов, в опции история заказов с личного кабинета.
 Реализована возможность просмотреть подробности заказа в модальном или отдельном окне.
-Согласно заданию, поиск выполнен по ID заказов, а не номеру, лимит 50 последних заказов c вебсокета, если ваш заказ не входит в список, его не выведет.
-Реализованы тесты всех редьюсеров, код в папке src/services/reducers/test.
-Cypress тесты для домашней страницы в папке cypress/e2e/home.cy.js.
+Согласно заданию, поиск выполнен по ID заказов, а не номеру, лимит 50 последних заказов c вебсокета, если ваш заказ не входит в список, его не выведет. Реализованы тесты.
 
-<table><tr><td valign="top" width="24%">
-<div align="center"><img src="./src/images/promo-feed.jpg" alt="home=page" width="25%">
-</div></td><td valign="top" width="24%">
-<div align="center"><img src="./src/images/promo-feed.jpg" alt="feed-page" width="25%">
-</div></td><td valign="top" width="24%">
-<div align="center"><img src="./src/images/promo-login.jpg" alt="profile-page" width="25%">
-</div></td><td valign="top" width="24%">
-<div align="center"><img src="./src/images/promo-modal.jpg" alt="modal-page" width="25%">
+<table><tr><td valign="top" width="25%">
+<div align="center"><img src="./src/images/promo-main.jpg" alt="home=page">
+</div></td><td valign="top" width="25%">
+<div align="center"><img src="./src/images/promo-feed.jpg" alt="feed-page">
+</div></td><td valign="top" width="25%">
+<div align="center"><img src="./src/images/promo-login.jpg" alt="profile-page">
+</div></td><td valign="top" width="25%">
+<div align="center"><img src="./src/images/promo-modal.jpg" alt="modal-page">
 </div></td></tr></table>
 
 Линк на работу https://david-arcanone.github.io/react-burger/index.html
@@ -46,6 +44,8 @@ Cypress тесты для домашней страницы в папке cypres
 html, css, js, typescript (4.9.5), библиотека react, redux (4.2.1), react-redux (8.0.5), redux-thunk (2.4.2), react-dnd (16.0.1), react-dnd-html5-backend (16.0.1), react-router-dom (18.2.0). Применяется шрифт JetBrains Mono и Набор UI-компонентов для курсового проекта React Developer Burger Ui Components ("ya.praktikum/react-developer-burger-ui-components" 1.14.0).
 Используется пакет react-intersection-observer (9.4.3) и react-custom-scrollbars-2 (4.5.0) для скролла ингредиентов в панели ингредиентов слева. Для присвоения уникальных идентификаторов используется uuid (9.0.0).
 используется webpack, .nojekyll и normalize.css.
+
+**Для разверстки и тестов применялись:** для разверстки проекта использовался gh-pages (5.0.0), тесты всех редьюсеров на js, код в папке src/services/reducers/test, Cypress (12.9.0) e2e тесты для домашней страницы в папке cypress/e2e/home.cy.js, 
 
 ### Планы на развитие:
 - 💻 Реализовать верстку под мобильную версию.
