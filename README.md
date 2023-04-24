@@ -31,13 +31,13 @@
 Cypress тесты для домашней страницы в папке cypress/e2e/home.cy.js.
 
 <table><tr><td valign="top" width="24%">
-<div align="center"><img src="./src/images/promo-feed.jpg" alt="home=page" width="25%">
+<div align="center"><img src="./src/images/promo-feed.jpg" alt="home=page">
 </div></td><td valign="top" width="24%">
-<div align="center"><img src="./src/images/promo-feed.jpg" alt="feed-page" width="25%">
+<div align="center"><img src="./src/images/promo-feed.jpg" alt="feed-page">
 </div></td><td valign="top" width="24%">
-<div align="center"><img src="./src/images/promo-login.jpg" alt="profile-page" width="25%">
+<div align="center"><img src="./src/images/promo-login.jpg" alt="profile-page">
 </div></td><td valign="top" width="24%">
-<div align="center"><img src="./src/images/promo-modal.jpg" alt="modal-page" width="25%">
+<div align="center"><img src="./src/images/promo-modal.jpg" alt="modal-page">
 </div></td></tr></table>
 
 Линк на работу https://david-arcanone.github.io/react-burger/index.html
