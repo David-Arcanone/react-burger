@@ -41,7 +41,7 @@
 Линк на работу https://david-arcanone.github.io/react-burger/index.html
 
 ### Технологии:
-html, css, js, typescript (4.9.5), библиотека react, redux (4.2.1), react-redux (8.0.5), redux-thunk (2.4.2), react-dnd (16.0.1), react-dnd-html5-backend (16.0.1), react-router-dom (18.2.0). Применяется шрифт JetBrains Mono и Набор UI-компонентов для курсового проекта React Developer Burger Ui Components ("ya.praktikum/react-developer-burger-ui-components" 1.14.0).
+html, css, js, typescript (4.9.5), библиотека react (18.2.0), redux (4.2.1), react-redux (8.0.5), redux-thunk (2.4.2), react-dnd (16.0.1), react-dnd-html5-backend (16.0.1), react-router-dom (18.2.0). Применяется шрифт JetBrains Mono и Набор UI-компонентов для курсового проекта React Developer Burger Ui Components ("ya.praktikum/react-developer-burger-ui-components" 1.14.0).
 Используется пакет react-intersection-observer (9.4.3) и react-custom-scrollbars-2 (4.5.0) для скролла ингредиентов в панели ингредиентов слева. Для присвоения уникальных идентификаторов используется uuid (9.0.0).
 используется webpack, .nojekyll и normalize.css.
 
